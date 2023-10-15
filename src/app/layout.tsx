@@ -14,11 +14,14 @@ export const revalidate = 0
 type Props = {
   children: React.ReactNode
 }
+
 export default function RootLayout({ children }: Props) {
   return (
     <html lang='kr' className='min-h-screen'>
       <body suppressHydrationWarning={true} className='relative min-h-screen overflow-scroll bg-white'>
-          <Providers>{children}</Providers>
+        <Providers>
+          <ThemeProviders>{children}</ThemeProviders>
+        </Providers>
       </body>
     </html>
   )
