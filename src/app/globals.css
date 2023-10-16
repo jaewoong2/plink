@@ -8,9 +8,16 @@ body {
 }
 
 * {
-  font-family: 'SpoqaHanSansNeo-Regular', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI',
-    'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-    sans-serif;
+  font-family: 'SpoqaHanSansNeo-Regular', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue',
+    'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', sans-serif;
   scroll-behavior: smooth;
   transition: background-color 300ms ease-in-out;
+}
+
+.hero-background {
+  background-color: #4040f415;
+  background-image: linear-gradient(rgba(110, 110, 110, 0.045) 1px, transparent 1px),
+    linear-gradient(to right, rgba(110, 110, 110, 0.045) 1px, transparent 1px);
+  background-size: 20px 20px;
 }
