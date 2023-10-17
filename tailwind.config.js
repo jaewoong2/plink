@@ -111,12 +111,21 @@ module.exports = {
             display: 'none',
           },
         },
+        rocket: {
+          '0%': {
+            transform: 'translate(-5%, 5%)',
+          },
+          '100%': {
+            transform: 'translate(45%, -45%)',
+          },
+        },
       },
       animation: {
         'fade-in-down': 'fade-in-down 0.5s ease-out',
         'fade-out-up': 'fade-out-up 0.5s ease-out',
         'fade-in-left': 'fade-in-left 0.5s ease-out',
         gradation: 'gradient 18s ease-out infinite',
+        rocket: 'rocket 0.8s ease-out',
       },
     },
   },

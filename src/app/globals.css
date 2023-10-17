@@ -16,7 +16,7 @@ body {
 }
 
 .hero-background {
-  background-color: #4040f415;
+  background-color: #9393a015;
   background-image: linear-gradient(rgba(110, 110, 110, 0.045) 1px, transparent 1px),
     linear-gradient(to right, rgba(110, 110, 110, 0.045) 1px, transparent 1px);
   background-size: 20px 20px;
