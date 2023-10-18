@@ -5,7 +5,6 @@ import { ThemeProviders } from '@/lib/ThemeProvider'
 import './font.css'
 import './globals.css'
 import { METADATA } from '@/constants'
-import GoogleAnalytics from '@/lib/GoogleAnalytics'
 
 export const metadata: Metadata = METADATA
 export const dynamic = 'force-dynamic'
