@@ -1,45 +1,71 @@
 import React from 'react'
-import Layout from '../components/Layout'
-import Link from 'next/link'
 import { NextPageProps } from '@/types'
+import { Metadata } from 'next'
+import Input from '../components/Input'
 
-const PLACEHOLDER =
-  'https://www.google.com/search?q=%EB%A7%81%ED%81%AC%EB%A5%BC+%EC%A4%84%EC%9D%B4%EB%8A%94+%EB%B0%A9%EB%B2%95&rlz=1C5CHFA_enKR1009KR1009&oq=%EB%A7%81%ED%81%AC%EB%A5%BC+&gs_lcrp=EgZjaHJvbWUqBggBEEUYOzIGCAAQRRg5MgYIARBFGDsyBggCEEUYPTIGCAMQRRg9MgYIBBBFGD3SAQgxODI1ajBqMagCALACAA&sourceid=chrome&ie=UTF-8'
+type OG = Metadata['openGraph']
+
+const getDataByLink = (
+  link: string
+): { data: { link: string; image: string; kakaotalk: OG; naver: OG; twiiter: OG } } => {
+  return {
+    data: {
+      link: 'Link',
+      image: 'https://yt3.ggpht.com/yti/ADpuP3M3y8Ak8cIZ1nlLeWZfX1dFg_sTwbW11TcX6yz-=s88-c-k-c0x00ffffff-no-rj-mo',
+      kakaotalk: {
+        url: 'https://prl.co/E2fcC3',
+        images: 'https://ywnfqdpcmgtllkshgzsl.supabase.co/storage/v1/object/public/newsletter/image/subsubs.png',
+        title: '타이틀',
+        description: '디스크립션',
+      },
+      naver: {
+        url: 'https://prl.co/E2fcC3',
+        images: 'https://ywnfqdpcmgtllkshgzsl.supabase.co/storage/v1/object/public/newsletter/image/subsubs.png',
+        title: '타이틀',
+        description: '디스크립션',
+      },
+      twiiter: {
+        url: 'https://prl.co/E2fcC3',
+        images: 'https://ywnfqdpcmgtllkshgzsl.supabase.co/storage/v1/object/public/newsletter/image/subsubs.png',
+        title: '타이틀',
+        description: '디스크립션',
+      },
+    },
+  }
+}
 
 const Page = ({ searchParams }: NextPageProps<null, { link: string }>) => {
   const { link } = searchParams
 
+  const { data } = getDataByLink(link)
+
+  // 링크 값을 통해 소셜 값을 갖고 온다.
+  // 어쩌구 저쩌구 한다
+
   return (
-    <Layout>
-      <div>
-        <div className='flex w-full flex-col items-center justify-center gap-3 py-4'>
-          <label className='input-group flex max-w-md justify-center'>
-            <span className='whitespace-nowrap'>원본 링크</span>
-            <input type='text' placeholder={link} className='input-bordered input w-full max-w-sm' value={link} />
-          </label>
-          <label className='input-group flex max-w-md justify-center'>
-            <span className='whitespace-nowrap border border-r-0 bg-white'>https://p-link.site/</span>
-            <input type='text' placeholder={'S0V4C21'} className='input-bordered input w-full max-w-sm' />
-          </label>
-          <Link
-            className='relative mx-auto flex h-[448px] w-[448px] flex-col items-center justify-center overflow-hidden rounded-xl border bg-white transition-transform hover:-translate-y-1'
-            href={'#'}
-          >
-            <div className='absolute left-0 top-0 w-full overflow-scroll truncate border bg-slate-100 py-1 text-sm opacity-50'>
-              {PLACEHOLDER}
-            </div>
-            <div className='h-full w-full bg-white'>
-              <img
-                src='https://ywnfqdpcmgtllkshgzsl.supabase.co/storage/v1/object/public/newsletter/image/subsubs.png'
-                alt='placeholder'
-              />
-            </div>
-            <p className=''>설명</p>
-          </Link>
-          <button className='btn-primary btn w-full max-w-md'>링크 만들기</button>
+    <>
+      <div className='w-full md:max-h-[min(906px,_90vh)] md:overflow-scroll'>
+        <div className='flex flex-col items-center'>
+          <div className='flex w-full items-center justify-center gap-3 border-b bg-slate-50 px-7 py-6'>
+            <img src={data.image} className='aspect-square h-[40px] w-[40px] rounded-full' alt='link' />
+            <div className='font-bold'>{data.link}</div>
+          </div>
+          <div className='my-1 flex w-full flex-col px-6'>
+            <Input className='mx-2 w-full py-1.5' label={<p className='text-sm font-semibold'>원본주소</p>} />
+          </div>
+          <div className='my-1 flex w-full flex-col px-6'>
+            <Input className='mx-2 w-full py-1.5' label={<p className='text-sm font-semibold'>원본주소</p>} />
+          </div>
+          <div className='my-1 flex w-full flex-col px-6'>
+            <Input className='mx-2 w-full py-1.5' label={<p className='text-sm font-semibold'>원본주소</p>} />
+          </div>
         </div>
+        <div className='divider px-6 before:bg-slate-100 after:bg-slate-100'>옵션</div>
       </div>
-    </Layout>
+      <div className='w-full md:max-h-[min(906px,_90vh)] md:overflow-scroll'>
+        <div className='flex h-full items-center justify-center text-sm font-semibold text-gray-500'>미리보기</div>
+      </div>
+    </>
   )
 }
 
