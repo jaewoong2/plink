@@ -15,7 +15,7 @@ type Props = {
   helper?: React.ReactNode
 }
 
-const Input = ({
+const Textarea = ({
   label,
   prefixElement,
   postfix,
@@ -23,13 +23,13 @@ const Input = ({
   className,
   helper,
   ...props
-}: PropsWithChildren<Props & JSX.IntrinsicElements['input']>) => {
+}: PropsWithChildren<Props & JSX.IntrinsicElements['textarea']>) => {
   return (
     <>
       <label htmlFor={props.id}>{label}</label>
       <div className={twMerge('flex w-full max-w-sm items-center rounded-lg border bg-white shadow-md')}>
         {prefixElement}
-        <input type='text' className={twMerge('w-full', className)} {...props} />
+        <textarea className={twMerge('w-full', className)} {...props} />
         {postfix && <div className={twMerge('h-[40px] w-[2px] bg-slate-200')} />}
         {postfix}
         {children}
@@ -39,4 +39,4 @@ const Input = ({
   )
 }
 
-export default Input
+export default Textarea
