@@ -20,7 +20,7 @@ const Hero = () => {
             </HeroTitle>
             <div className='flex w-full flex-col items-center justify-center gap-3 py-4'>
               <Input
-                className='ml-3 h-full pl-3'
+                className='ml-3 h-full py-3 pl-3'
                 onChange={(e) => setLink(e.target.value)}
                 value={link}
                 placeholder={'더 나은 마케팅을 위해 링크를 단축해보세요.'}
