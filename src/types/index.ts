@@ -12,3 +12,19 @@ export type NextPageProps<
   params: Params
   searchParams: SearhParams
 }
+
+export type CreateLinkState = {
+  description: string
+  image: string
+  site_name: string
+  title: string
+  type: string
+  url: string
+}
+
+export type CreateLinkAction =
+  | { type: 'INIT'; payload: CreateLinkState }
+  | { type: 'SET_IMAGE'; payload: string }
+  | { type: 'SET_LINK'; payload: string }
+  | { type: 'SET_TITLE'; payload: string }
+  | { type: 'SET_DESCRIPTION'; payload: string }
