@@ -1,5 +1,5 @@
 'use client'
-import { useRef, useEffect, useState, useCallback } from 'react'
+import { useRef, useState, useCallback, useLayoutEffect } from 'react'
 import { NewsLetter } from '@/types'
 import { IMAGE } from '@/constants'
 import { twMerge } from 'tailwind-merge'
@@ -38,7 +38,7 @@ const CardImage = ({ image, alt, className, width, height, wrapperClassName }: P
     }
   }, [])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         // 요소가 뷰포트와 교차하면 이미지를 로딩합니다.
@@ -69,9 +69,9 @@ const CardImage = ({ image, alt, className, width, height, wrapperClassName }: P
         observer.unobserve(image)
       }
     }
-  }, [onLoadImage])
+  }, [onLoadImage, image])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const resize = () => {
       onLoadImage()
     }
@@ -81,7 +81,7 @@ const CardImage = ({ image, alt, className, width, height, wrapperClassName }: P
     return () => {
       window.removeEventListener('resize', resize)
     }
-  }, [])
+  }, [onLoadImage])
 
   return (
     <figure
