@@ -27,7 +27,9 @@ const Textarea = ({
   return (
     <>
       <label htmlFor={props.id}>{label}</label>
-      <div className={twMerge('flex w-full max-w-sm items-center rounded-lg border bg-white shadow-md')}>
+      <div
+        className={twMerge('flex w-full max-w-sm items-center rounded-lg border bg-white shadow-md max-md:max-w-xl')}
+      >
         {prefixElement}
         <textarea className={twMerge('w-full', className)} onChange={() => {}} {...props} />
         {postfix && <div className={twMerge('h-[40px] w-[2px] bg-slate-200')} />}

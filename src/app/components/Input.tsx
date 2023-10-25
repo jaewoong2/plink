@@ -27,9 +27,23 @@ const Input = ({
   return (
     <>
       <label htmlFor={props.id}>{label}</label>
-      <div className={twMerge('flex w-full max-w-sm items-center rounded-lg border bg-white shadow-md')}>
+      <div
+        className={twMerge(
+          'flex w-full max-w-sm items-center rounded-lg border bg-white shadow-md max-md:max-w-xl',
+          props.disabled && 'cursor-not-allowed bg-slate-200 text-gray-600'
+        )}
+      >
         {prefixElement}
-        <input type='text' className={twMerge('w-full', className)} onChange={() => {}} {...props} />
+        <input
+          type='text'
+          className={twMerge(
+            'w-full',
+            'disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-gray-600',
+            className
+          )}
+          onChange={() => {}}
+          {...props}
+        />
         {postfix && <div className={twMerge('h-[40px] w-[2px] bg-slate-200')} />}
         {postfix}
         {children}
