@@ -1,11 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Dropzone from './Dropzone'
 import Input from '@/app/components/Input'
 import Textarea from '@/app/components/Textarea'
-import { useCreateLinkState } from '../hooks/useCreateLink'
+import { useCreateLinkAction, useCreateLinkState } from '../hooks/useCreateLink'
+import useFileUpload from '../hooks/useUploadImage'
 
 const OGoptions = () => {
   const { title, description } = useCreateLinkState()
+  const { upload, data } = useFileUpload()
+  const dispatch = useCreateLinkAction()
+
+  const onChangeImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      upload(e.target.files[0])
+    }
+  }
+
+  useEffect(() => {
+    if (data?.data?.path) {
+      dispatch({ type: 'SET_IMAGE', payload: data?.data?.path })
+    }
+  }, [data?.data?.path, dispatch])
 
   return (
     <>
@@ -13,7 +28,7 @@ const OGoptions = () => {
         {'SNS 커스터마이징'}
       </p>
       <div className='flex animate-fade-in-down flex-col gap-2 px-6 py-4'>
-        <Dropzone />
+        <Dropzone onChange={onChangeImage} />
         <div className='my-2 flex w-full flex-col'>
           <Input
             value={title}
@@ -26,7 +41,7 @@ const OGoptions = () => {
           <Textarea
             value={description}
             placeholder='오늘의 상품은 테니스 공 24개입 입니다. 3500원의 즐거움. 🚀'
-            rows={2}
+            rows={5}
             className='textarea mx-2 w-full resize-none px-0 py-1.5'
             label={<p className='text-sm font-semibold text-gray-600'>SNS 내용</p>}
           />

@@ -6,7 +6,12 @@ const fetcher: Fetcher<any> = (url: string) =>
   })
 
 const useGetOgData = (url?: string, configuration?: SWRConfiguration) => {
-  return useSWR(`/api/og?url=${url}`, fetcher, { ...configuration })
+  return useSWR(`/api/og?url=${url}`, fetcher, {
+    refreshInterval: 0,
+    revalidateOnFocus: false,
+    revalidateIfStale: false,
+    ...configuration,
+  })
 }
 
 export default useGetOgData
