@@ -9,6 +9,8 @@ const initialState: CreateLinkState = {
   title: '',
   type: '',
   url: '',
+  customURL: '',
+  link: '',
 }
 
 export const CreateLinkStateContext = createContext<CreateLinkState | null>(null)
@@ -21,6 +23,8 @@ function CreateLinkActionReducer(state: CreateLinkState, action: CreateLinkActio
     case 'SET_IMAGE':
       return { ...state, image: action.payload }
     case 'SET_LINK':
+      return { ...state, link: action.payload }
+    case 'SET_URL':
       return { ...state, url: action.payload }
     case 'SET_TITLE':
       return { ...state, title: action.payload }
@@ -39,8 +43,8 @@ export const CreateLinkProvider = ({ link, children }: PropsWithChildren<Props>)
   const { data } = useGetOgData(link)
 
   useEffect(() => {
-    dispatch({ type: 'INIT', payload: { ...data } })
-  }, [data])
+    dispatch({ type: 'INIT', payload: { ...data, url: link, link } })
+  }, [link, data])
 
   return (
     <CreateLinkStateContext.Provider value={state}>

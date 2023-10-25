@@ -20,11 +20,15 @@ export type CreateLinkState = {
   title: string
   type: string
   url: string
+  customURL: string
+  link: string
 }
 
 export type CreateLinkAction =
   | { type: 'INIT'; payload: CreateLinkState }
   | { type: 'SET_IMAGE'; payload: string }
+  | { type: 'SET_URL'; payload: string }
   | { type: 'SET_LINK'; payload: string }
   | { type: 'SET_TITLE'; payload: string }
   | { type: 'SET_DESCRIPTION'; payload: string }
+  | { type: 'SET_CUSTOM_URL'; payload: string }
