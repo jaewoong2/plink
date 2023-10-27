@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getMetaTags } from '@/lib/index'
+import { getMetaTags } from '@/lib/getMetaTags'
 
 export async function GET(request: NextRequest): Promise<NextResponse<null> | Response> {
   try {
