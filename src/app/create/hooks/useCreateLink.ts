@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { CreateLinkActionContext, CreateLinkStateContext } from '../constext/createLinkContext'
+import { CreateLinkActionContext, CreateLinkStateContext } from '../context/createLinkContext'
 
 export const useCreateLinkState = () => {
   const context = useContext(CreateLinkStateContext)
