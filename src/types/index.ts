@@ -19,6 +19,7 @@ export type CreateLinkState = {
   site_name: string
   title: string
   type: string
+  isLoading: boolean
   url: string
   customURL: string
   link: string
@@ -32,3 +33,4 @@ export type CreateLinkAction =
   | { type: 'SET_TITLE'; payload: string }
   | { type: 'SET_DESCRIPTION'; payload: string }
   | { type: 'SET_CUSTOM_URL'; payload: string }
+  | { type: 'SET_ISLOADING'; payload: boolean }

@@ -1,8 +1,13 @@
 import React from 'react'
 
-const Dropzone = (props: JSX.IntrinsicElements['input']) => {
+const Dropzone = ({ isLoading, ...props }: JSX.IntrinsicElements['input'] & { isLoading?: boolean }) => {
   return (
-    <div>
+    <div className='relative'>
+      {isLoading && (
+        <div className='absolute left-0 top-0 flex h-full w-full items-center justify-center rounded-lg bg-slate-200'>
+          <div className='loading loading-dots loading-md ' />
+        </div>
+      )}
       <div className='flex w-full items-center justify-center pr-3'>
         <label
           htmlFor='dropzone-file'

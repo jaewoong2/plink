@@ -12,13 +12,14 @@ type Props = {
   height?: string | number
 
   wrapperClassName?: string
+  isLoading?: boolean
 } & Partial<NewsLetter>
 
 const INIT_CLASS = ['h-auto', 'w-auto', 'h-auto', 'w-auto']
 const FIT_WIDTH_CLASS = ['w-full', 'max-w-full', 'h-auto', 'max-h-full', 'object-cover']
 const FIT_HEIGHT_CLASS = ['h-full', 'max-h-full', 'w-auto', 'max-w-full', 'object-cover']
 
-const CardImage = ({ image, alt, className, width, height, wrapperClassName }: Props) => {
+const CardImage = ({ image, alt, className, width, height, wrapperClassName, isLoading }: Props) => {
   const [isError, setIsError] = useState(false)
   const imageRef = useRef<HTMLImageElement>(null)
   const figureRef = useRef<HTMLDivElement>(null)
@@ -85,9 +86,14 @@ const CardImage = ({ image, alt, className, width, height, wrapperClassName }: P
 
   return (
     <figure
-      className={twMerge('h-[100%] max-h-[100%] min-h-[100%] w-full min-w-full max-w-full', wrapperClassName)}
+      className={twMerge('relative h-[100%] max-h-[100%] min-h-[100%] w-full min-w-full max-w-full', wrapperClassName)}
       ref={figureRef}
     >
+      {(isLoading || !image) && (
+        <div className='absolute left-0 top-0 flex h-full w-full items-center justify-center bg-slate-200 bg-opacity-80 backdrop-blur-sm'>
+          <div className='loading loading-dots loading-md ' />
+        </div>
+      )}
       {!isError && (
         <img
           src={IMAGE.placeholder}
@@ -99,7 +105,7 @@ const CardImage = ({ image, alt, className, width, height, wrapperClassName }: P
           onLoad={onLoadImage}
           onResize={onLoadImage}
           loading='lazy'
-          className={twMerge(...INIT_CLASS, className)}
+          className={twMerge(...INIT_CLASS, 'lazy animate-pulse bg-slate-700 grayscale-[80%]', className)}
           data-src={image}
           width={width}
           height={height}
@@ -114,7 +120,7 @@ const CardImage = ({ image, alt, className, width, height, wrapperClassName }: P
             setIsError(true)
           }}
           loading='lazy'
-          className={twMerge(...INIT_CLASS, 'grayscale-[80%]', className)}
+          className={twMerge(...INIT_CLASS, 'lazy animate-pulse bg-slate-700 grayscale-[80%]', className)}
           width={width}
           height={height}
         />

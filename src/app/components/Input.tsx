@@ -13,6 +13,8 @@ type Props = {
   label?: React.ReactNode
   variants?: keyof typeof SIZE
   helper?: React.ReactNode
+
+  status?: 'SUCCESS' | 'ERROR' | 'NORMAL'
 }
 
 const Input = ({
@@ -22,15 +24,18 @@ const Input = ({
   children,
   className,
   helper,
+  status = 'NORMAL',
   ...props
 }: PropsWithChildren<Props & JSX.IntrinsicElements['input']>) => {
   return (
     <>
       <label htmlFor={props.id}>{label}</label>
-      <div
+      <label
         className={twMerge(
           'flex w-full max-w-sm items-center rounded-lg border bg-white shadow-md max-md:max-w-xl',
-          props.disabled && 'cursor-not-allowed bg-slate-200 text-gray-600'
+          props.disabled && 'cursor-not-allowed bg-slate-200 text-gray-600',
+          status === 'SUCCESS' && '',
+          status === 'ERROR' && 'border-red-400 '
         )}
       >
         {prefixElement}
@@ -41,13 +46,14 @@ const Input = ({
             'disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-gray-600',
             className
           )}
+          value={''}
           onChange={() => {}}
           {...props}
         />
-        {postfix && <div className={twMerge('h-[40px] w-[2px] bg-slate-200')} />}
+        {postfix && <p className={twMerge('h-[40px] w-[2px] bg-slate-200', status === 'ERROR' && 'bg-red-200 ')} />}
         {postfix}
         {children}
-      </div>
+      </label>
       {helper}
     </>
   )
