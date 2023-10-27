@@ -1,15 +1,36 @@
 import React, { PropsWithChildren } from 'react'
 import MainLayout from '@/app/components/Layout'
+import Hero from '../components/Hero'
+import LinkCard from '../components/LinkCard'
 
 const Layout = ({ children }: PropsWithChildren) => {
   return (
-    <MainLayout className='flex h-full min-h-[calc(100vh-200px)] w-full items-center justify-center'>
-      <div className='fixed left-0 top-0 z-20 h-full w-full bg-white bg-opacity-5 backdrop-blur-sm'></div>
-      <div className='absolute left-1/2 top-1/2 z-20 mx-auto max-h-[80%] w-full max-w-4xl -translate-x-1/2 -translate-y-1/2 overflow-scroll rounded-xl border bg-white shadow-xl max-md:w-[90%]'>
-        <div className='scrollbar-hide relative flex max-w-4xl items-stretch divide-x divide-gray-100 max-md:flex-col'>
-          {children}
-        </div>
+    <MainLayout className='overflow-hidden pb-32'>
+      <Hero />
+      <div className='mx-auto flex w-full max-w-sm flex-col gap-4 rounded-md bg-white px-4 py-2 shadow-md'>
+        <p className='mx-auto py-2 font-semibold text-gray-600'>현재 등록 중인 링크</p>
+        <LinkCard
+          imageSrc='https://ywnfqdpcmgtllkshgzsl.supabase.co/storage/v1/object/public/newsletter/image/subsubs.png'
+          customizedLink='prl.co/RW2eEr'
+          originalLink='https://newsubs.site'
+        />
+        <LinkCard
+          imageSrc='https://ywnfqdpcmgtllkshgzsl.supabase.co/storage/v1/object/public/newsletter/image/subsubs.png'
+          customizedLink='prl.co/RW2eEr'
+          originalLink='https://newsubs.site'
+        />
+        <LinkCard
+          imageSrc='https://ywnfqdpcmgtllkshgzsl.supabase.co/storage/v1/object/public/newsletter/image/subsubs.png'
+          customizedLink='prl.co/RW2eEr'
+          originalLink='https://newsubs.site'
+        />
+        <LinkCard
+          imageSrc='https://ywnfqdpcmgtllkshgzsl.supabase.co/storage/v1/object/public/newsletter/image/subsubs.png'
+          customizedLink='prl.co/RW2eEr'
+          originalLink='https://newsubs.site'
+        />
       </div>
+      {children}
     </MainLayout>
   )
 }

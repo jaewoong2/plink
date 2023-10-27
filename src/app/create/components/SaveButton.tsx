@@ -6,7 +6,13 @@ type Props = {
   onCancleButtonClick?: JSX.IntrinsicElements['button']['onClick']
 }
 
-const SaveButton = ({ className, children, wrapperClassName, ...props }: Props & JSX.IntrinsicElements['button']) => {
+const SaveButton = ({
+  className,
+  children,
+  wrapperClassName,
+  onCancleButtonClick,
+  ...props
+}: Props & JSX.IntrinsicElements['button']) => {
   return (
     <div
       className={twMerge(
@@ -14,7 +20,7 @@ const SaveButton = ({ className, children, wrapperClassName, ...props }: Props &
         wrapperClassName
       )}
     >
-      <button className={twMerge('btn w-fit', className)} type='button'>
+      <button className={'btn w-fit'} onClick={onCancleButtonClick} type='button'>
         취소
       </button>
       <button className={twMerge('btn-primary btn flex-1 text-white', className)} {...props}>

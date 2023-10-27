@@ -2,13 +2,20 @@ import CardImage from '@/app/components/CardImage'
 import React from 'react'
 import { useCreateLinkState } from '../hooks/useCreateLink'
 import SaveButton from './SaveButton'
+import { useRouter } from 'next/navigation'
+import { isValidUrl } from '@/lib'
 
 const RightSection = () => {
-  const { description, image, url, title } = useCreateLinkState()
+  const { description, image, url, title, isLoading } = useCreateLinkState()
+  const navigation = useRouter()
+
+  const onCancle = () => {
+    navigation.push('/')
+  }
 
   return (
     <div className='w-1/2 max-md:w-full'>
-      <div className='flex max-h-[150px] items-center justify-center border-b bg-slate-50 py-6 text-sm font-semibold text-gray-600'>
+      <div className='flex h-full max-h-[150px] items-center justify-center border-b bg-slate-50 py-6 text-sm font-semibold text-gray-600'>
         미리보기
       </div>
       <div className='flex w-full flex-col items-center'>
@@ -17,8 +24,10 @@ const RightSection = () => {
           네이버
         </div>
         <div className='h-[340px] w-[90%] overflow-hidden border' aria-label='네이버 SNS 카드'>
-          <div className='h-[220px] max-h-[220px] w-auto border-b'>
-            {image && <CardImage image={image} alt='preview' className='cursor-pointer object-cover' />}
+          <div className={'h-[220px] max-h-[220px] w-auto border-b'}>
+            {image && (
+              <CardImage image={image} alt='preview' className='cursor-pointer object-cover' isLoading={isLoading} />
+            )}
           </div>
           <div className='p-[21px_26px_18px]'>
             <div aria-label='타이틀' className='max-h-[40px] truncate text-[#333]'>
@@ -28,7 +37,7 @@ const RightSection = () => {
               {description}
             </div>
             <div aria-label='원본 링크 호스트 네임' className='flex items-center text-sm text-[#00a832]'>
-              {url && new URL(url).hostname}
+              {isValidUrl(url) && new URL(url).hostname}
             </div>
           </div>
         </div>
@@ -39,7 +48,9 @@ const RightSection = () => {
         </div>
         <div className='h-[340px] w-[90%] overflow-hidden border' aria-label='네이버 SNS 카드'>
           <div className='h-[220px] max-h-[220px] w-auto border-b'>
-            {image && <CardImage image={image} alt='preview' className='cursor-pointer object-cover' />}
+            {image && (
+              <CardImage image={image} alt='preview' className='cursor-pointer object-cover' isLoading={isLoading} />
+            )}
           </div>
           <div className='p-[8px_12px]'>
             <div aria-label='타이틀' className='max-h-[40px] truncate text-[#333]'>
@@ -49,12 +60,15 @@ const RightSection = () => {
               {description}
             </div>
             <div aria-label='원본 링크 호스트 네임' className='flex items-center text-[12px] text-sm text-[#aaa]'>
-              {url && new URL(url).hostname}
+              {isValidUrl(url) && new URL(url).hostname}
             </div>
           </div>
         </div>
       </div>
-      <SaveButton wrapperClassName='h-[40px] z-10 flex items-center justify-end bg-white px-3 py-10 shadow-md transition-all sticky bottom-0 max-md:hidden mt-5'>
+      <SaveButton
+        onCancleButtonClick={onCancle}
+        wrapperClassName='h-[40px] z-10 flex items-center justify-end bg-white px-3 py-10 shadow-md transition-all sticky bottom-0 max-md:hidden mt-5'
+      >
         커스텀 링크 저장하고 복사하기
       </SaveButton>
     </div>
