@@ -24,7 +24,7 @@
     "@types/uuid": "^9.0.2",
     "@typescript-eslint/parser": "^5.0.0",
     "autoprefixer": "10.4.14",
-    "axios": "^1.4.0",
+    "axios": "^1.6.0",
     "cheerio": "^1.0.0-rc.12",
     "daisyui": "^3.4.0",
     "eslint": "8.41.0",
@@ -53,6 +53,7 @@
   "devDependencies": {
     "@motionone/utils": "^10.15.1",
     "@tailwindcss/typography": "^0.5.10",
+    "@tanstack/eslint-plugin-query": "^5.0.5",
     "@types/gtag.js": "^0.0.12",
     "@types/react-beautiful-dnd": "^13.1.4",
     "@typescript-eslint/eslint-plugin": "^5.13.0",

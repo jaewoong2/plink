@@ -1,5 +1,5 @@
 'use client'
-import React, { Suspense } from 'react'
+import React, { useEffect } from 'react'
 import { NextPageProps } from '@/types'
 import LeftSection from './components/LeftSection'
 import RightSection from './components/RightSection'
@@ -20,6 +20,14 @@ const Page = ({ searchParams }: NextPageProps<null, { link: string }>) => {
       navigation.push('/')
     }
   }
+
+  useEffect(() => {
+    document.querySelector('html')?.classList.add('overflow-hidden')
+
+    return () => {
+      document.querySelector('html')?.classList.remove('overflow-hidden')
+    }
+  }, [])
 
   return (
     <div

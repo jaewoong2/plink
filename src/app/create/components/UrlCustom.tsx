@@ -6,9 +6,12 @@ import { useRouter } from 'next/navigation'
 import useDebounceCallback from '../hooks/useDebounceCallback'
 import { twMerge } from 'tailwind-merge'
 import CardImage from '@/app/components/CardImage'
+import useGetOgData from '../hooks/useGetOgData'
+import { isValidUrl } from '@/lib'
 
 const UrlCustom = () => {
   const { image, title, customURL, link, isLoading } = useCreateLinkState()
+  const { error } = useGetOgData(link, { enabled: isValidUrl(link) })
   const [isEdit, setIsEdit] = useState(false)
   const navigation = useRouter()
 
@@ -26,7 +29,7 @@ const UrlCustom = () => {
   return (
     <div className='flex flex-col items-center'>
       <div className='flex w-full flex-col items-center justify-center gap-3 border-b bg-slate-50 px-7 py-6'>
-        {image && (
+        {isLoading && (
           <figure
             className={twMerge(
               'h-16 w-16 overflow-hidden rounded-full bg-slate-200',
@@ -36,7 +39,7 @@ const UrlCustom = () => {
             <CardImage image={image} className='h-full w-auto object-cover' alt={title + '- 미리보기'} />
           </figure>
         )}
-        {!image && <span className='loading loading-dots loading-md'></span>}
+        {isValidUrl(link) && !error && !image && <span className='loading loading-dots loading-md'></span>}
         <div className='truncate text-center font-bold'>{title ?? '제목'}</div>
       </div>
       <form
@@ -46,6 +49,7 @@ const UrlCustom = () => {
         }}
       >
         <Input
+          placeholder={link || 'https://prl.co'}
           disabled={!isEdit}
           value={link ?? ''}
           onChange={(e) => {

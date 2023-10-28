@@ -1,5 +1,3 @@
-export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
-
 export interface Database {
   public: {
     Tables: {
@@ -13,6 +11,7 @@ export interface Database {
           link: string | null
           thumbnail: string | null
           title: string | null
+          updated_at: string
           view: number | null
         }
         Insert: {
@@ -24,6 +23,7 @@ export interface Database {
           link?: string | null
           thumbnail?: string | null
           title?: string | null
+          updated_at?: string
           view?: number | null
         }
         Update: {
@@ -35,6 +35,7 @@ export interface Database {
           link?: string | null
           thumbnail?: string | null
           title?: string | null
+          updated_at?: string
           view?: number | null
         }
         Relationships: []
@@ -226,6 +227,57 @@ export interface Database {
             referencedColumns: ['id']
           }
         ]
+      }
+      ogs: {
+        Row: {
+          created_at: string
+          custom_url: string | null
+          description: string | null
+          id: number
+          image: string | null
+          title: string | null
+          views: number | null
+        }
+        Insert: {
+          created_at?: string
+          custom_url?: string | null
+          description?: string | null
+          id?: number
+          image?: string | null
+          title?: string | null
+          views?: number | null
+        }
+        Update: {
+          created_at?: string
+          custom_url?: string | null
+          description?: string | null
+          id?: number
+          image?: string | null
+          title?: string | null
+          views?: number | null
+        }
+        Relationships: []
+      }
+      urls: {
+        Row: {
+          created_at: string
+          custom_url: string
+          id: number
+          origin_url: string | null
+        }
+        Insert: {
+          created_at?: string
+          custom_url?: string
+          id?: number
+          origin_url?: string | null
+        }
+        Update: {
+          created_at?: string
+          custom_url?: string
+          id?: number
+          origin_url?: string | null
+        }
+        Relationships: []
       }
       users: {
         Row: {

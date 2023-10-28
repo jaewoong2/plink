@@ -1,9 +1,10 @@
-import useSWRMutation, { MutationFetcher, SWRMutationConfiguration } from 'swr/mutation'
+import { UseMutationOptions, useMutation } from '@tanstack/react-query'
+import axios from 'axios'
 
 interface UploadResponse {
-  data?: {
-    path?: string
-    name?: string
+  data: {
+    path: string
+    name: string
   }
   path: string
   error: null | string
@@ -11,14 +12,13 @@ interface UploadResponse {
   statusText: string
 }
 
-const fetcher: MutationFetcher<UploadResponse, string, FormData> = (url, { arg }) =>
-  fetch(url, {
-    method: 'POST',
-    body: arg,
-  }).then((res) => res.json())
+const fetcher = (arg: FormData) => axios.post<UploadResponse['data']>('/api/upload', arg).then((res) => res.data)
 
-const usePostUploadImage = (configuration?: SWRMutationConfiguration<UploadResponse, Error, string>) => {
-  const { data, ...rest } = useSWRMutation('/api/upload', fetcher, configuration)
+const usePostUploadImage = (configuration?: UseMutationOptions<UploadResponse['data'], Error, FormData, unknown>) => {
+  const { data, ...rest } = useMutation<UploadResponse['data'], Error, FormData, unknown>({
+    mutationFn: fetcher,
+    ...configuration,
+  })
 
   return {
     data: data,

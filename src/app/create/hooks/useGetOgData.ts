@@ -1,15 +1,17 @@
-import useSWR, { Fetcher, SWRConfiguration } from 'swr'
+import axios, { AxiosError } from 'axios'
+import { UndefinedInitialDataOptions, useQuery } from '@tanstack/react-query'
+import { LinkState } from '@/types'
 
-const fetcher: Fetcher<any> = (url: string) =>
-  fetch(url, { method: 'GET', cache: 'no-cache' }).then(async (res) => {
-    return res.json()
-  })
+const fetcher = (url: string) => axios.get(url).then((res) => res.data)
 
-const useGetOgData = (url?: string, configuration?: SWRConfiguration) => {
-  return useSWR(`/api/og?url=${url}`, fetcher, {
-    refreshInterval: 0,
-    revalidateOnFocus: false,
-    revalidateIfStale: false,
+const useGetOgData = (
+  url: string,
+  configuration?: Omit<UndefinedInitialDataOptions<LinkState, AxiosError<{ message: string }>>, 'queryKey' | 'queryFn'>
+) => {
+  return useQuery<LinkState, AxiosError<{ message: string }>>({
+    queryKey: [url],
+    queryFn: () => fetcher(`/api/og?url=${url}`),
+    retry: 2,
     ...configuration,
   })
 }

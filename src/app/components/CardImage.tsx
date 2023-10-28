@@ -18,6 +18,7 @@ type Props = {
 const INIT_CLASS = ['h-auto', 'w-auto', 'h-auto', 'w-auto']
 const FIT_WIDTH_CLASS = ['w-full', 'max-w-full', 'h-auto', 'max-h-full', 'object-cover']
 const FIT_HEIGHT_CLASS = ['h-full', 'max-h-full', 'w-auto', 'max-w-full', 'object-cover']
+const LAZY_CLASS = ['animate-pulse', 'bg-slate-700', 'grayscale-[80%]']
 
 const CardImage = ({ image, alt, className, width, height, wrapperClassName, isLoading }: Props) => {
   const [isError, setIsError] = useState(false)
@@ -47,8 +48,7 @@ const CardImage = ({ image, alt, className, width, height, wrapperClassName, isL
           const img = entry.target
           const src = img.getAttribute('data-src') ?? ''
           img.setAttribute('src', src)
-          img.classList.remove('lazy')
-          img.classList.remove('animate-pulse')
+          img.classList.remove(...LAZY_CLASS)
 
           // 이미지가 로딩되었으므로 observer에서 제거합니다.
           observer.unobserve(img)
@@ -105,7 +105,7 @@ const CardImage = ({ image, alt, className, width, height, wrapperClassName, isL
           onLoad={onLoadImage}
           onResize={onLoadImage}
           loading='lazy'
-          className={twMerge(...INIT_CLASS, 'lazy animate-pulse bg-slate-700 grayscale-[80%]', className)}
+          className={twMerge(...INIT_CLASS, ...LAZY_CLASS, className)}
           data-src={image}
           width={width}
           height={height}
@@ -120,7 +120,7 @@ const CardImage = ({ image, alt, className, width, height, wrapperClassName, isL
             setIsError(true)
           }}
           loading='lazy'
-          className={twMerge(...INIT_CLASS, 'lazy animate-pulse bg-slate-700 grayscale-[80%]', className)}
+          className={twMerge(...INIT_CLASS, 'grayscale-[80%]', className)}
           width={width}
           height={height}
         />

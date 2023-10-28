@@ -1,6 +1,8 @@
 import { CreateLinkAction, CreateLinkState } from '@/types'
 import React, { PropsWithChildren, createContext, useEffect, useReducer } from 'react'
 import useGetOgData from '../hooks/useGetOgData'
+import { useToast } from '@chakra-ui/react'
+import { isValidUrl } from '@/lib'
 
 const initialState: CreateLinkState = {
   description: '',
@@ -9,9 +11,10 @@ const initialState: CreateLinkState = {
   title: '',
   type: '',
   url: '', //
-  isLoading: false,
   customURL: '',
   link: '', // 원본 얘는 처음 이후 바뀌면 안됨
+  isLoading: false,
+  isError: false,
 }
 
 export const CreateLinkStateContext = createContext<CreateLinkState | null>(null)
@@ -38,18 +41,31 @@ function CreateLinkActionReducer(state: CreateLinkState, action: CreateLinkActio
   }
 }
 type Props = {
-  link?: string
+  link: string
 }
 
 export const CreateLinkProvider = ({ link, children }: PropsWithChildren<Props>) => {
   const [state, dispatch] = useReducer(CreateLinkActionReducer, initialState)
-  const { data, isLoading } = useGetOgData(link, { keepPreviousData: false })
+  const { data, isLoading, error } = useGetOgData(link, { enabled: isValidUrl(link) })
+  const toast = useToast()
 
   useEffect(() => {
     if (data) {
       dispatch({ type: 'INIT', payload: { ...data, isLoading, url: link, link } })
     }
-  }, [link, data, isLoading])
+  }, [link, data, isLoading, error])
+
+  useEffect(() =>   {
+    if (error) {
+      toast({
+        title: error?.response?.data?.message,
+        description: '올바른 링크를 작성해주세요',
+        variant: 'solid',
+        position: 'top',
+        status: 'error',
+      })
+    }
+  }, [error, toast])
 
   return (
     <CreateLinkStateContext.Provider value={state}>

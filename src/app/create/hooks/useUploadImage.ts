@@ -5,7 +5,7 @@ const useFileUpload = () => {
   const [file, setFile] = useState<File | null | undefined>(null)
   const [isUploading, setIsUploading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const { trigger, ...rest } = usePostUploadImage()
+  const { mutate, ...rest } = usePostUploadImage()
 
   const upload = async (file: File | null) => {
     setIsUploading(true)
@@ -18,7 +18,7 @@ const useFileUpload = () => {
       const formData = new FormData()
       formData.append('file', file)
       formData.append('name', file.name)
-      trigger(formData)
+      mutate(formData)
     } catch (e: unknown) {
       if (e instanceof Error) {
         setError(e.message)

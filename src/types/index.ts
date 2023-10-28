@@ -13,20 +13,24 @@ export type NextPageProps<
   searchParams: SearhParams
 }
 
-export type CreateLinkState = {
+export type LinkState = {
   description: string
   image: string
   site_name: string
   title: string
   type: string
-  isLoading: boolean
   url: string
-  customURL: string
   link: string
 }
 
+export type CreateLinkState = LinkState & {
+  customURL: string
+  isLoading: boolean
+  isError: boolean
+}
+
 export type CreateLinkAction =
-  | { type: 'INIT'; payload: CreateLinkState }
+  | { type: 'INIT'; payload: Partial<CreateLinkState> }
   | { type: 'SET_IMAGE'; payload: string }
   | { type: 'SET_URL'; payload: string }
   | { type: 'SET_LINK'; payload: string }
