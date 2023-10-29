@@ -1,3 +1,5 @@
+export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
+
 export interface Database {
   public: {
     Tables: {
@@ -267,7 +269,7 @@ export interface Database {
         }
         Insert: {
           created_at?: string
-          custom_url?: string
+          custom_url: string
           id?: number
           origin_url?: string | null
         }
@@ -373,6 +375,18 @@ export interface Database {
           name?: string | null
           thumbnail?: string | null
           view?: number | null
+        }
+        Relationships: []
+      }
+      url_infos: {
+        Row: {
+          created_at: string | null
+          custom_url: string | null
+          description: string | null
+          image: string | null
+          origin_url: string | null
+          title: string | null
+          views: number | null
         }
         Relationships: []
       }

@@ -3,6 +3,7 @@ import React, { PropsWithChildren, createContext, useEffect, useReducer } from '
 import useGetOgData from '../hooks/useGetOgData'
 import { useToast } from '@chakra-ui/react'
 import { isValidUrl } from '@/lib'
+import useGetUUID from '../hooks/useGetUUID'
 
 const initialState: CreateLinkState = {
   description: '',
@@ -36,6 +37,8 @@ function CreateLinkActionReducer(state: CreateLinkState, action: CreateLinkActio
       return { ...state, description: action.payload }
     case 'SET_ISLOADING':
       return { ...state, isLoading: action.payload }
+    case 'SET_CUSTOM_URL':
+      return { ...state, customURL: action.payload }
     default:
       return state
   }
@@ -47,6 +50,7 @@ type Props = {
 export const CreateLinkProvider = ({ link, children }: PropsWithChildren<Props>) => {
   const [state, dispatch] = useReducer(CreateLinkActionReducer, initialState)
   const { data, isLoading, error } = useGetOgData(link, { enabled: isValidUrl(link) })
+  const { data: uuidData } = useGetUUID()
   const toast = useToast()
 
   useEffect(() => {
@@ -55,7 +59,7 @@ export const CreateLinkProvider = ({ link, children }: PropsWithChildren<Props>)
     }
   }, [link, data, isLoading, error])
 
-  useEffect(() =>   {
+  useEffect(() => {
     if (error) {
       toast({
         title: error?.response?.data?.message,
@@ -66,6 +70,12 @@ export const CreateLinkProvider = ({ link, children }: PropsWithChildren<Props>)
       })
     }
   }, [error, toast])
+
+  useEffect(() => {
+    if (uuidData?.uuid && !state.customURL) {
+      dispatch({ type: 'SET_CUSTOM_URL', payload: uuidData.uuid })
+    }
+  }, [uuidData, dispatch, state])
 
   return (
     <CreateLinkStateContext.Provider value={state}>

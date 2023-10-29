@@ -3,8 +3,7 @@ import { getMetaTags } from '@/lib/getMetaTags'
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { Database } from '@/types/supabase'
-import * as uuid from 'uuid'
-import { CreateLinkState } from '@/types'
+import { OGS, URLS } from '@/types'
 
 export async function GET(request: NextRequest): Promise<NextResponse<null> | Response> {
   try {
@@ -34,9 +33,8 @@ export async function GET(request: NextRequest): Promise<NextResponse<null> | Re
 export async function POST(request: NextRequest) {
   const supabase = createRouteHandlerClient<Database>({ cookies })
   try {
-    const { customURL, description, image, link, title }: CreateLinkState = await request.json()
-
-    const { data } = await supabase.from('urls').select('*').eq('custom_url', customURL)
+    const { custom_url, description, image, origin_url, title }: OGS & URLS = await request.json()
+    const { data } = await supabase.from('urls').select('*').eq('custom_url', custom_url).single()
 
     if (data) {
       return NextResponse.json(
@@ -49,39 +47,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const session = await supabase.auth.getSession()
+    const { status: urlStatus } = await supabase.from('urls').insert({ custom_url, origin_url })
+    const { status: ogStatus } = await supabase.from('ogs').insert({ custom_url, description, title, image, views: 0 })
 
-    if (!session.data.session && (description || title || image)) {
-      return NextResponse.json(
-        {
-          message: '로그인 후 설정 가능 합니다.',
-        },
-        {
-          status: 401,
-        }
-      )
-    }
-
-    const { status } = await supabase.from('urls').insert({ custom_url: customURL, origin_url: link })
-
-    if (session.data.session && (description || title || image)) {
-      const { status } = await supabase
-        .from('ogs')
-        .insert({ custom_url: customURL, description, title, image, views: 0 })
-
-      if (199 >= status && status >= 300) {
-        return NextResponse.json(
-          {
-            message: '잘못 된 요청 입니다.',
-          },
-          {
-            status: 401,
-          }
-        )
-      }
-    }
-
-    if (199 < status && status < 300) {
+    if (199 < urlStatus && urlStatus < 300 && 199 < ogStatus && ogStatus < 300) {
       return NextResponse.json({
         status: 200,
         message: '등록 성공!',

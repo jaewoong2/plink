@@ -4,13 +4,25 @@ import { useCreateLinkState } from '../hooks/useCreateLink'
 import SaveButton from './SaveButton'
 import { useRouter } from 'next/navigation'
 import { isValidUrl } from '@/lib'
+import usePostCustomLink from '../hooks/usePostCustomLink'
 
 const RightSection = () => {
-  const { description, image, url, title, isLoading } = useCreateLinkState()
+  const { description, image, url, link, title, isLoading, customURL } = useCreateLinkState()
+  const { mutate } = usePostCustomLink()
   const navigation = useRouter()
 
   const onCancle = () => {
     navigation.push('/')
+  }
+
+  const onClickSaveButton = () => {
+    mutate({
+      custom_url: customURL,
+      origin_url: link,
+      title,
+      image,
+      description,
+    })
   }
 
   return (
@@ -66,6 +78,7 @@ const RightSection = () => {
         </div>
       </div>
       <SaveButton
+        onClick={onClickSaveButton}
         onCancleButtonClick={onCancle}
         wrapperClassName='h-[40px] z-10 flex items-center justify-end bg-white px-3 py-10 shadow-md transition-all sticky bottom-0 max-md:hidden mt-5'
       >
