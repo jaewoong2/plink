@@ -5,10 +5,21 @@ import SaveButton from './SaveButton'
 import { useRouter } from 'next/navigation'
 import { isValidUrl } from '@/lib'
 import usePostCustomLink from '../hooks/usePostCustomLink'
+import { useToast } from '@chakra-ui/react'
 
 const RightSection = () => {
   const { description, image, url, link, title, isLoading, customURL } = useCreateLinkState()
-  const { mutate } = usePostCustomLink()
+  const toast = useToast()
+  const { mutate } = usePostCustomLink({
+    onError(error) {
+      toast({
+        variant: 'solid',
+        position: 'top',
+        title: error.response?.data.message,
+        status: 'error',
+      })
+    },
+  })
   const navigation = useRouter()
 
   const onCancle = () => {

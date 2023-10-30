@@ -74,6 +74,7 @@ export const CreateLinkProvider = ({ link, children }: PropsWithChildren<Props>)
   useEffect(() => {
     if (uuidData?.uuid && !state.customURL) {
       dispatch({ type: 'SET_CUSTOM_URL', payload: uuidData.uuid })
+      return
     }
   }, [uuidData, dispatch, state])
 

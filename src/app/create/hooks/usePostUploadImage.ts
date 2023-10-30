@@ -3,8 +3,10 @@ import axios from 'axios'
 
 interface UploadResponse {
   data: {
-    path: string
-    name: string
+    data: {
+      path: string
+      name: string
+    }
   }
   path: string
   error: null | string
@@ -21,7 +23,7 @@ const usePostUploadImage = (configuration?: UseMutationOptions<UploadResponse['d
   })
 
   return {
-    data: data,
+    data,
     ...rest,
   }
 }

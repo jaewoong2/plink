@@ -7,7 +7,7 @@ import useFileUpload from '../hooks/useUploadImage'
 
 const OGoptions = () => {
   const { title, description } = useCreateLinkState()
-  const { upload, data, isMutating } = useFileUpload()
+  const { upload, data, isUploading } = useFileUpload()
   const dispatch = useCreateLinkAction()
 
   const onChangeImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,8 +35,8 @@ const OGoptions = () => {
   }, [data?.data?.path, dispatch])
 
   useEffect(() => {
-    dispatch({ type: 'SET_ISLOADING', payload: isMutating })
-  }, [isMutating, dispatch])
+    dispatch({ type: 'SET_ISLOADING', payload: isUploading })
+  }, [isUploading, dispatch])
 
   return (
     <>
@@ -44,7 +44,7 @@ const OGoptions = () => {
         {'SNS 커스터마이징'}
       </p>
       <div className='flex animate-fade-in-down flex-col gap-2 px-6 py-4'>
-        <Dropzone onChange={onChangeImage} isLoading={isMutating} />
+        <Dropzone onChange={onChangeImage} isLoading={isUploading} />
         <div className='my-2 flex w-full flex-col'>
           <Input
             onChange={onChangeOG}
