@@ -2,7 +2,7 @@ import { CreateLinkAction, CreateLinkState } from '@/types'
 import React, { PropsWithChildren, createContext, useEffect, useReducer } from 'react'
 import useGetOgData from '../hooks/useGetOgData'
 import { useToast } from '@chakra-ui/react'
-import { isValidUrl } from '@/lib'
+import { addHttpProtocol, isValidUrl } from '@/lib'
 import useGetUUID from '../hooks/useGetUUID'
 
 const initialState: CreateLinkState = {
@@ -12,7 +12,7 @@ const initialState: CreateLinkState = {
   title: '',
   type: '',
   url: '', //
-  customURL: '',
+  customURL: null,
   link: '', // 원본 얘는 처음 이후 바뀌면 안됨
   isLoading: false,
   isError: false,
@@ -48,16 +48,33 @@ type Props = {
 }
 
 export const CreateLinkProvider = ({ link, children }: PropsWithChildren<Props>) => {
-  const [state, dispatch] = useReducer(CreateLinkActionReducer, initialState)
-  const { data, isLoading, error } = useGetOgData(link, { enabled: isValidUrl(link) })
-  const { data: uuidData } = useGetUUID()
+  const protocolLink = addHttpProtocol(link)
+  const [state, dispatch] = useReducer(CreateLinkActionReducer, { ...initialState, link: protocolLink })
+  const { data, isLoading, error, isSuccess } = useGetOgData(protocolLink, { enabled: isValidUrl(protocolLink) })
+  const { data: uuidData } = useGetUUID({
+    enabled: state.customURL === null,
+  })
   const toast = useToast()
 
   useEffect(() => {
     if (data) {
-      dispatch({ type: 'INIT', payload: { ...data, isLoading, url: link, link } })
+      dispatch({ type: 'INIT', payload: { ...data, isLoading, url: protocolLink, link: protocolLink } })
+      return
     }
-  }, [link, data, isLoading, error])
+  }, [data, isLoading, protocolLink])
+
+  useEffect(() => {
+    if (isSuccess && !data && !error) {
+      toast({
+        title: <p className='font-tossFace'>정보가 없어요 😂</p>,
+        description: <p className='font-tossFace'>추가로 작성을 해주세요</p>,
+        variant: 'solid',
+        position: 'top',
+        status: 'warning',
+      })
+      return
+    }
+  }, [data, error, isSuccess, toast])
 
   useEffect(() => {
     if (error) {
@@ -72,11 +89,11 @@ export const CreateLinkProvider = ({ link, children }: PropsWithChildren<Props>)
   }, [error, toast])
 
   useEffect(() => {
-    if (uuidData?.uuid && !state.customURL) {
+    if (uuidData?.uuid) {
       dispatch({ type: 'SET_CUSTOM_URL', payload: uuidData.uuid })
       return
     }
-  }, [uuidData, dispatch, state])
+  }, [uuidData, dispatch])
 
   return (
     <CreateLinkStateContext.Provider value={state}>

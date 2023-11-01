@@ -2,6 +2,7 @@ import { Database } from './supabase'
 
 export type OGS = Database['public']['Tables']['ogs']['Row']
 export type URLS = Database['public']['Tables']['urls']['Row']
+export type URLS_INFOS = Database['public']['Views']['url_infos']['Row']
 
 export type NextPageProps<
   Params extends Record<string, string> | null = null,
@@ -22,7 +23,7 @@ export type LinkState = {
 }
 
 export type CreateLinkState = LinkState & {
-  customURL: string
+  customURL: string | null
   isLoading: boolean
   isError: boolean
 }

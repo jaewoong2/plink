@@ -10,7 +10,18 @@ import { useToast } from '@chakra-ui/react'
 const RightSection = () => {
   const { description, image, url, link, title, isLoading, customURL } = useCreateLinkState()
   const toast = useToast()
+  const navigation = useRouter()
+
   const { mutate } = usePostCustomLink({
+    onSuccess() {
+      toast({
+        variant: 'solid',
+        position: 'top',
+        title: '등록이 완료 되었습니다',
+        status: 'success',
+      })
+      navigation.push('/')
+    },
     onError(error) {
       toast({
         variant: 'solid',
@@ -20,7 +31,6 @@ const RightSection = () => {
       })
     },
   })
-  const navigation = useRouter()
 
   const onCancle = () => {
     navigation.push('/')

@@ -1,6 +1,8 @@
 import { getUrlByCustomUrl } from '@/app/supabase-server'
+import { isValidUrl } from '@/lib'
 import { NextPageProps } from '@/types'
 import { redirect } from 'next/navigation'
+import Redirect from './Redirect'
 
 export async function generateMetadata({ params }: NextPageProps<{ url: string }>) {
   const data = await getUrlByCustomUrl(params.url)
@@ -24,13 +26,23 @@ export async function generateMetadata({ params }: NextPageProps<{ url: string }
 }
 
 const Page = async ({ params }: NextPageProps<{ url: string }>) => {
-  const url = await getUrlByCustomUrl(params.url)
+  try {
+    const url = await getUrlByCustomUrl(decodeURIComponent(params.url))
 
-  if (url?.data.origin_url) {
-    redirect(url?.data.origin_url)
+    if (url?.data.origin_url && isValidUrl(url.data.origin_url)) {
+      redirect(url?.data.origin_url)
+    }
+
+    redirect('/')
+  } catch (err) {
+    const url = await getUrlByCustomUrl(decodeURIComponent(params.url))
+
+    if (!(url?.data.origin_url && isValidUrl(url.data.origin_url))) {
+      return <Redirect origin_url={'/'} />
+    }
+
+    return <Redirect origin_url={url?.data.origin_url} />
   }
-
-  redirect('/')
 }
 
 export default Page

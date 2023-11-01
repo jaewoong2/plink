@@ -16,3 +16,10 @@ export function isValidUrl(url: string) {
     throw err
   }
 }
+
+export function addHttpProtocol(url: string): string {
+  if (!/^https?:\/\//i.test(url)) {
+    return 'http://' + url
+  }
+  return url
+}

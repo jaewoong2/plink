@@ -1,21 +1,19 @@
+import React, { useState } from 'react'
 import Input from '@/app/components/Input'
-import React, { useEffect, useState } from 'react'
 import { useCreateLinkAction, useCreateLinkState } from '../hooks/useCreateLink'
 import { AiOutlineEdit } from 'react-icons/ai'
 import { useRouter } from 'next/navigation'
 import useDebounceCallback from '../hooks/useDebounceCallback'
 import { twMerge } from 'tailwind-merge'
 import CardImage from '@/app/components/CardImage'
-import useGetOgData from '../hooks/useGetOgData'
 import { isValidUrl } from '@/lib'
 import useGetUUID from '../hooks/useGetUUID'
 
 const UrlCustom = () => {
-  const { image, title, customURL, link, isLoading } = useCreateLinkState()
-  const { error } = useGetOgData(link, { enabled: isValidUrl(link) })
+  const { image, title, customURL, link, isLoading, isError: error } = useCreateLinkState()
   const [isEdit, setIsEdit] = useState(false)
   const navigation = useRouter()
-  const { refetch, data } = useGetUUID({ enabled: false })
+  const { refetch } = useGetUUID({ enabled: false })
 
   const [onChangeOriginURL] = useDebounceCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     navigation.push(`create?link=${e.target.value}`)
@@ -32,10 +30,6 @@ const UrlCustom = () => {
     refetch()
   }
 
-  useEffect(() => {
-    dispatch({ type: 'SET_CUSTOM_URL', payload: data?.uuid ?? customURL })
-  }, [data, dispatch, customURL])
-
   return (
     <div className='flex flex-col items-center'>
       <div className='flex w-full flex-col items-center justify-center gap-3 border-b bg-slate-50 px-7 py-6'>
@@ -47,7 +41,7 @@ const UrlCustom = () => {
         >
           <CardImage image={image} className='h-full w-auto object-cover' alt={title + '- 미리보기'} />
         </figure>
-        {isValidUrl(link) && !error && !image && <span className='loading loading-dots loading-md'></span>}
+        {isLoading && isValidUrl(link) && !error && !image && <span className='loading loading-dots loading-md'></span>}
         <div className='w-full truncate text-center font-bold'>{title ?? '제목'}</div>
       </div>
       <form
@@ -96,7 +90,7 @@ const UrlCustom = () => {
               </select>
             </div>
           }
-          value={customURL}
+          value={customURL ?? ''}
           onChange={onChangeCustomURL}
           className='w-full rounded-r-lg border-l px-2 py-1.5 text-sm'
           label={<p className='text-sm font-semibold text-gray-600'>커스텀 링크</p>}

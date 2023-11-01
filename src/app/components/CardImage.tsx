@@ -1,6 +1,5 @@
 'use client'
 import { useRef, useState, useCallback, useLayoutEffect } from 'react'
-import { NewsLetter } from '@/types'
 import { IMAGE } from '@/constants'
 import { twMerge } from 'tailwind-merge'
 
@@ -13,14 +12,14 @@ type Props = {
 
   wrapperClassName?: string
   isLoading?: boolean
-} & Partial<NewsLetter>
+}
 
 const INIT_CLASS = ['h-auto', 'w-auto', 'h-auto', 'w-auto']
 const FIT_WIDTH_CLASS = ['w-full', 'max-w-full', 'h-auto', 'max-h-full', 'object-cover']
 const FIT_HEIGHT_CLASS = ['h-full', 'max-h-full', 'w-auto', 'max-w-full', 'object-cover']
-const LAZY_CLASS = ['animate-pulse', 'bg-slate-700', 'grayscale-[80%]']
+const LAZY_CLASS = ['bg-slate-700', 'grayscale-[80%]']
 
-const CardImage = ({ image, alt, className, width, height, wrapperClassName, isLoading }: Props) => {
+const CardImage = ({ image, alt, className, width, height, wrapperClassName }: Props) => {
   const [isError, setIsError] = useState(false)
   const imageRef = useRef<HTMLImageElement>(null)
   const figureRef = useRef<HTMLDivElement>(null)
@@ -46,9 +45,11 @@ const CardImage = ({ image, alt, className, width, height, wrapperClassName, isL
         // 요소가 뷰포트와 교차하면 이미지를 로딩합니다.
         if (entry.isIntersecting) {
           const img = entry.target
-          const src = img.getAttribute('data-src') ?? ''
-          img.setAttribute('src', src)
-          img.classList.remove(...LAZY_CLASS)
+          const originSrc = img.getAttribute('data-src')
+          if (originSrc) {
+            img.setAttribute('src', originSrc)
+            img.classList.remove(...LAZY_CLASS)
+          }
 
           // 이미지가 로딩되었으므로 observer에서 제거합니다.
           observer.unobserve(img)
@@ -89,11 +90,6 @@ const CardImage = ({ image, alt, className, width, height, wrapperClassName, isL
       className={twMerge('relative h-[100%] max-h-[100%] min-h-[100%] w-full min-w-full max-w-full', wrapperClassName)}
       ref={figureRef}
     >
-      {(isLoading || !image) && (
-        <div className='absolute left-0 top-0 flex h-full w-full items-center justify-center bg-slate-200 bg-opacity-80 backdrop-blur-sm'>
-          <div className='loading loading-dots loading-md ' />
-        </div>
-      )}
       {!isError && (
         <img
           src={IMAGE.placeholder}
@@ -120,6 +116,7 @@ const CardImage = ({ image, alt, className, width, height, wrapperClassName, isL
             setIsError(true)
           }}
           loading='lazy'
+          data-src={image}
           className={twMerge(...INIT_CLASS, 'grayscale-[80%]', className)}
           width={width}
           height={height}
