@@ -38,7 +38,7 @@ const RightSection = () => {
 
   const onClickSaveButton = () => {
     mutate({
-      custom_url: customURL,
+      custom_url: customURL ?? '',
       origin_url: link,
       title,
       image,

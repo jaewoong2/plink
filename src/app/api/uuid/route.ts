@@ -4,6 +4,8 @@ import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { NextResponse } from 'next/server'
 import * as uuid from 'uuid'
 
+export const dynamic = 'force-dynamic'
+
 const getUUID = () => {
   return uuid.v4().split('-')[0]
 }

@@ -6,6 +6,8 @@ import { Database } from '@/types/supabase'
 import { OGS, URLS } from '@/types'
 import { isValidUrl } from '@/lib'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(request: NextRequest): Promise<NextResponse<null> | Response> {
   try {
     const url = new URL(request.url)
