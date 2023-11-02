@@ -32,17 +32,17 @@ const UrlCustom = () => {
 
   return (
     <div className='flex flex-col items-center'>
-      <div className='flex w-full flex-col items-center justify-center gap-3 border-b bg-slate-50 px-7 py-6'>
+      <div className='flex w-full flex-col items-center justify-center gap-3 border-b bg-slate-50 px-7 py-6 dark:border-darkBg-100 dark:bg-darkBg-200'>
         <figure
           className={twMerge(
-            'h-16 w-16 overflow-hidden rounded-full bg-slate-200',
+            'h-16 w-16 overflow-hidden rounded-full bg-slate-200 dark:border dark:border-white dark:text-white',
             isLoading ? 'h-16 w-16 animate-pulse' : 'bg-transparent'
           )}
         >
           <CardImage image={image} className='h-full w-auto object-cover' alt={title + '- 미리보기'} />
         </figure>
         {isLoading && isValidUrl(link) && !error && !image && <span className='loading loading-dots loading-md'></span>}
-        <div className='w-full truncate text-center font-bold'>{title ?? '제목'}</div>
+        <div className='w-full truncate text-center font-bold dark:text-white'>{title ?? '제목'}</div>
       </div>
       <form
         className='relative my-2 flex w-full flex-col px-6'
@@ -67,7 +67,7 @@ const UrlCustom = () => {
           }
           status={!isValidUrl(link) ? 'ERROR' : 'NORMAL'}
           className={twMerge('mx-2 w-full py-2 text-sm')}
-          label={<p className='text-sm font-semibold text-gray-600'>원본 링크</p>}
+          label={<p className='text-sm font-semibold text-gray-600 dark:text-white'>원본 링크</p>}
           postfix={
             <button
               type='submit'
@@ -76,7 +76,7 @@ const UrlCustom = () => {
                 'flex h-fit cursor-pointer items-center justify-center px-3 py-0 text-sm transition-transform active:scale-90'
               }
             >
-              <AiOutlineEdit className={isEdit && link ? 'text-blue-900' : ''} />
+              <AiOutlineEdit className={isEdit && link ? 'text-blue-900 dark:text-white' : ''} />
             </button>
           }
         />
@@ -85,21 +85,21 @@ const UrlCustom = () => {
         <Input
           prefixElement={
             <div className='flex items-center justify-center'>
-              <select className='mr-2 rounded-lg rounded-r-none bg-transparent px-5 py-2 text-center text-sm text-gray-400'>
-                <option className='h-full'>plink.kr</option>
+              <select className='mr-2 rounded-lg rounded-r-none bg-transparent px-5 py-2 text-center text-sm text-gray-400 dark:text-white'>
+                <option className='h-full dark:text-white'>plink.kr</option>
               </select>
             </div>
           }
           value={customURL ?? ''}
           onChange={onChangeCustomURL}
-          className='w-full rounded-r-lg border-l px-2 py-1.5 text-sm'
-          label={<p className='text-sm font-semibold text-gray-600'>커스텀 링크</p>}
+          className='w-full rounded-r-lg border-l px-2 py-1.5 text-sm dark:border-darkBg-100'
+          label={<p className='text-sm font-semibold text-gray-600 dark:text-white'>커스텀 링크</p>}
           helper={
-            <div className='flex w-full justify-end px-6 pt-2 text-xs'>
+            <div className='flex w-full justify-end pt-2 text-xs'>
               <button
                 type='button'
                 onClick={onClickRandomLinkGenerate}
-                className='rounded-xl p-1 font-normal text-primary-500 transition-transform active:scale-95'
+                className='rounded-xl font-normal text-primary-500 transition-transform active:scale-95 dark:text-white'
               >
                 랜덤 링크 생성
               </button>

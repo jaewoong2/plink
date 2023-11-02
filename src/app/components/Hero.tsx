@@ -63,7 +63,7 @@ const Hero = () => {
                   </Link>
                 }
               />
-              <div className='py-6 text-sm font-semibold'>
+              <div className='py-6 text-sm font-semibold dark:text-white'>
                 온라인 마케팅을 위한 Custom URL을 <strong className='text-blue-600'>무료</strong>로 만들어보세요
               </div>
             </form>

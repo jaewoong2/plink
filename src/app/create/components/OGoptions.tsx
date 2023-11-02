@@ -40,7 +40,7 @@ const OGoptions = () => {
 
   return (
     <>
-      <p className='cursor-pointer items-center justify-between px-6 text-sm font-semibold text-gray-600 peer-checked:py-2 '>
+      <p className='cursor-pointer items-center justify-between px-6 text-sm font-semibold text-gray-600 peer-checked:py-2 dark:text-white'>
         {'SNS 커스터마이징'}
       </p>
       <div className='flex animate-fade-in-down flex-col gap-2 px-6 py-4'>
@@ -52,7 +52,7 @@ const OGoptions = () => {
             name='title'
             placeholder='오늘의 상품'
             className='mx-2 w-full py-2 text-sm'
-            label={<p className='text-sm font-semibold text-gray-600'>SNS 제목</p>}
+            label={<p className='text-sm font-semibold text-gray-600 dark:text-white'>SNS 제목</p>}
           />
         </div>
         <div className='my-2 flex w-full flex-col'>
@@ -63,7 +63,7 @@ const OGoptions = () => {
             placeholder='오늘의 상품은 테니스 공 24개입 입니다. 3500원의 즐거움. 🚀'
             rows={5}
             className='textarea mx-2 w-full resize-none px-0 py-1.5'
-            label={<p className='text-sm font-semibold text-gray-600'>SNS 내용</p>}
+            label={<p className='text-sm font-semibold text-gray-600 dark:text-white'>SNS 내용</p>}
           />
         </div>
       </div>

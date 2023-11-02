@@ -26,12 +26,21 @@ const Textarea = ({
 }: PropsWithChildren<Props & JSX.IntrinsicElements['textarea']>) => {
   return (
     <>
-      <label htmlFor={props.id}>{label}</label>
+      <label htmlFor={props.id} className='dark:text-white'>
+        {label}
+      </label>
       <div
-        className={twMerge('flex w-full max-w-sm items-center rounded-lg border bg-white shadow-md max-md:max-w-xl')}
+        className={twMerge(
+          'flex w-full max-w-sm items-center rounded-lg border bg-white shadow-md max-md:max-w-xl',
+          'dark:border-darkBg-100 dark:bg-darkBg-300 dark:text-white'
+        )}
       >
         {prefixElement}
-        <textarea className={twMerge('w-full', className)} onChange={() => {}} {...props} />
+        <textarea
+          className={twMerge('w-full', 'dark:bg-darkBg-300 dark:text-white', className)}
+          onChange={() => {}}
+          {...props}
+        />
         {postfix && <div className={twMerge('h-[40px] w-[2px] bg-slate-200')} />}
         {postfix}
         {children}

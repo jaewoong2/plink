@@ -33,7 +33,8 @@ const Input = ({
       <label
         className={twMerge(
           'flex w-full max-w-sm items-center rounded-lg border bg-white shadow-md max-md:max-w-xl',
-          props.disabled && 'cursor-not-allowed bg-slate-200 text-gray-600',
+          'dark:border-darkBg-100 dark:bg-darkBg-300 dark:shadow-none',
+          props.disabled && 'cursor-not-allowed bg-slate-200 text-gray-600 dark:bg-darkBg-400',
           status === 'SUCCESS' && '',
           status === 'ERROR' && 'border-red-400 '
         )}
@@ -43,14 +44,23 @@ const Input = ({
           type='text'
           className={twMerge(
             'w-full',
-            'disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-gray-600',
+            'disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-gray-600 disabled:dark:bg-darkBg-400',
+            'dark:bg-darkBg-300 dark:text-white',
             className
           )}
           value={''}
           onChange={() => {}}
           {...props}
         />
-        {postfix && <p className={twMerge('h-[40px] w-[2px] bg-slate-200', status === 'ERROR' && 'bg-red-200 ')} />}
+        {postfix && (
+          <p
+            className={twMerge(
+              'h-[40px] w-[2px] bg-slate-200 ',
+              'dark:bg-darkBg-100',
+              status === 'ERROR' && 'bg-red-200 '
+            )}
+          />
+        )}
         {postfix}
         {children}
       </label>

@@ -17,6 +17,7 @@ const SaveButton = ({
     <div
       className={twMerge(
         'z-10 flex h-fit items-center justify-end gap-3 rounded-t-xl border bg-white px-3 py-2 transition-all max-md:hidden md:sticky md:bottom-0 md:shadow-[0_-8px_14px_-7px_rgba(0,0,0,0.25)]',
+        'dark:border-darkBg-100 dark:bg-darkBg-300',
         wrapperClassName
       )}
     >

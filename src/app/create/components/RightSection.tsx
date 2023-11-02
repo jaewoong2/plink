@@ -48,7 +48,7 @@ const RightSection = () => {
 
   return (
     <div className='w-1/2 max-md:w-full'>
-      <div className='flex h-full max-h-[150px] items-center justify-center border-b bg-slate-50 py-6 text-sm font-semibold text-gray-600'>
+      <div className='flex h-full max-h-[150px] items-center justify-center border-b bg-slate-50 py-6 text-sm font-semibold text-gray-600 dark:border-darkBg-100 dark:bg-darkBg-200 dark:text-white'>
         미리보기
       </div>
       <div className='flex w-full flex-col items-center'>
@@ -56,7 +56,7 @@ const RightSection = () => {
         <div className='divider px-12 py-3 text-xs font-semibold text-[#05d686] before:bg-[#05d686] after:bg-[#05d686]'>
           네이버
         </div>
-        <div className='h-[340px] w-[90%] overflow-hidden border' aria-label='네이버 SNS 카드'>
+        <div className='h-[340px] w-[90%] overflow-hidden border bg-white' aria-label='네이버 SNS 카드'>
           <div className={'h-[220px] max-h-[220px] w-auto border-b'}>
             {image && (
               <CardImage image={image} alt='preview' className='cursor-pointer object-cover' isLoading={isLoading} />
@@ -79,7 +79,7 @@ const RightSection = () => {
         <div className='divider px-12 py-3 text-xs font-semibold text-[#7a753f] before:bg-[#F7E600] after:bg-[#F7E600]'>
           카카오
         </div>
-        <div className='h-[340px] w-[90%] overflow-hidden border' aria-label='네이버 SNS 카드'>
+        <div className='h-[340px] w-[90%] overflow-hidden border bg-white' aria-label='네이버 SNS 카드'>
           <div className='h-[220px] max-h-[220px] w-auto border-b'>
             {image && (
               <CardImage image={image} alt='preview' className='cursor-pointer object-cover' isLoading={isLoading} />
