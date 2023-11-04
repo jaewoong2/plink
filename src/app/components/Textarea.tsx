@@ -32,12 +32,20 @@ const Textarea = ({
       <div
         className={twMerge(
           'flex w-full max-w-sm items-center rounded-lg border bg-white shadow-md max-md:max-w-xl',
-          'dark:border-darkBg-100 dark:bg-darkBg-300 dark:text-white'
+          'dark:border-darkBg-100 dark:bg-darkBg-300 dark:text-white',
+          props.disabled && 'cursor-not-allowed bg-slate-200 text-gray-600 dark:bg-darkBg-400',
+          props.readOnly && 'cursor-not-allowed bg-slate-200 text-gray-600 dark:bg-darkBg-400'
         )}
       >
         {prefixElement}
         <textarea
-          className={twMerge('w-full', 'dark:bg-darkBg-300 dark:text-white', className)}
+          className={twMerge(
+            'w-full',
+            'dark:bg-darkBg-300 dark:text-white',
+            'disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-gray-600 disabled:dark:bg-darkBg-400',
+            'read-only:cursor-not-allowed read-only:bg-slate-200 read-only:text-gray-600 read-only:dark:bg-darkBg-400',
+            className
+          )}
           onChange={() => {}}
           {...props}
         />

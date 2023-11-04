@@ -9,9 +9,11 @@ type Props = {
   imageSrc: string
   customizedLink?: string
   originalLink?: string
+  customURL: string | null
+  options?: boolean
 }
 
-const LinkCard = ({ imageSrc, customizedLink, originalLink }: Props) => {
+const LinkCard = ({ imageSrc, customizedLink, originalLink, customURL, options }: Props) => {
   return (
     <div className='flex items-center justify-between rounded-md border p-2 px-3 transition-all will-change-transform hover:-translate-y-1  hover:shadow-md dark:border-darkBg-100 dark:bg-darkBg-400'>
       <div className='flex w-[90%] items-center gap-3'>
@@ -39,14 +41,19 @@ const LinkCard = ({ imageSrc, customizedLink, originalLink }: Props) => {
           </Link>
         </div>
       </div>
-      <div className='flex w-[10%] flex-col items-end'>
-        <button className='btn-ghost btn-sm btn-circle btn'>
-          <FiSettings className='text-lg font-bold text-gray-500 dark:text-white' />
-        </button>
-        <button className='btn-ghost btn-sm btn-circle btn'>
-          <BiBarChartAlt className='text-lg font-bold text-gray-500 dark:text-white' />
-        </button>
-      </div>
+      {options && (
+        <div className='flex w-[10%] flex-col items-end'>
+          <Link
+            href={`/update?link=${originalLink}&customURL=${customURL}`}
+            className='btn-ghost btn-sm btn-circle btn'
+          >
+            <FiSettings className='text-lg font-bold text-gray-500 dark:text-white' />
+          </Link>
+          <button className='btn-ghost btn-sm btn-circle btn'>
+            <BiBarChartAlt className='text-lg font-bold text-gray-500 dark:text-white' />
+          </button>
+        </div>
+      )}
     </div>
   )
 }

@@ -20,7 +20,7 @@ export type LinkState = {
   type: string
   url: string
   link: string
-}
+} & Partial<URLS_INFOS>
 
 export type CreateLinkState = LinkState & {
   customURL: string | null

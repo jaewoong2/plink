@@ -7,17 +7,21 @@ import { isValidUrl } from '@/lib'
 import usePostCustomLink from '../hooks/usePostCustomLink'
 import { useToast } from '@chakra-ui/react'
 
-const RightSection = () => {
-  const { description, image, url, link, title, isLoading, customURL } = useCreateLinkState()
+type Props = {
+  type?: 'CREATE' | 'UPDATE'
+}
+
+const RightSection = ({ type }: Props) => {
+  const { description, image, url, link, title, isLoading, customURL, ogs_id, urls_id } = useCreateLinkState()
   const toast = useToast()
   const navigation = useRouter()
 
-  const { mutate } = usePostCustomLink({
-    onSuccess() {
+  const { mutate } = usePostCustomLink(type ?? 'CREATE', {
+    onSuccess(data) {
       toast({
         variant: 'solid',
         position: 'top',
-        title: '등록이 완료 되었습니다',
+        title: data.message,
         status: 'success',
       })
       navigation.push('/')
@@ -38,6 +42,8 @@ const RightSection = () => {
 
   const onClickSaveButton = () => {
     mutate({
+      ogs_id: ogs_id,
+      urls_id: urls_id,
       custom_url: customURL ?? '',
       origin_url: link,
       title,
@@ -70,7 +76,7 @@ const RightSection = () => {
               {description}
             </div>
             <div aria-label='원본 링크 호스트 네임' className='flex items-center text-sm text-[#00a832]'>
-              {isValidUrl(url) && new URL(url).hostname}
+              {isValidUrl(link) && new URL(link).hostname}
             </div>
           </div>
         </div>
@@ -93,7 +99,7 @@ const RightSection = () => {
               {description}
             </div>
             <div aria-label='원본 링크 호스트 네임' className='flex items-center text-[12px] text-sm text-[#aaa]'>
-              {isValidUrl(url) && new URL(url).hostname}
+              {isValidUrl(link) && new URL(link).hostname}
             </div>
           </div>
         </div>

@@ -8,8 +8,10 @@ import { twMerge } from 'tailwind-merge'
 import CardImage from '@/app/components/CardImage'
 import { isValidUrl } from '@/lib'
 import useGetUUID from '../hooks/useGetUUID'
+import useIsLoggedIn from '../hooks/useIsLoggedIn'
 
 const UrlCustom = () => {
+  const { check, isLoggedIn } = useIsLoggedIn()
   const { image, title, customURL, link, isLoading, isError: error } = useCreateLinkState()
   const [isEdit, setIsEdit] = useState(false)
   const navigation = useRouter()
@@ -83,6 +85,8 @@ const UrlCustom = () => {
       </form>
       <div className='my-1 flex w-full flex-col px-6'>
         <Input
+          readOnly={!isLoggedIn}
+          onClick={() => check()}
           prefixElement={
             <div className='flex items-center justify-center'>
               <select className='mr-2 rounded-lg rounded-r-none bg-transparent px-5 py-2 text-center text-sm text-gray-400 dark:text-white'>
@@ -92,7 +96,7 @@ const UrlCustom = () => {
           }
           value={customURL ?? ''}
           onChange={onChangeCustomURL}
-          className='w-full rounded-r-lg border-l px-2 py-1.5 text-sm dark:border-darkBg-100'
+          className='w-full rounded-r-lg border-l px-2 py-1.5 text-sm read-only:cursor-pointer dark:border-darkBg-100'
           label={<p className='text-sm font-semibold text-gray-600 dark:text-white'>커스텀 링크</p>}
           helper={
             <div className='flex w-full justify-end pt-2 text-xs'>

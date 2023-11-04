@@ -125,12 +125,14 @@ export interface Database {
           {
             foreignKeyName: 'letters_newsletter_id_fkey'
             columns: ['newsletter_id']
+            isOneToOne: false
             referencedRelation: 'newsletter'
             referencedColumns: ['id']
           },
           {
             foreignKeyName: 'letters_newsletter_id_fkey'
             columns: ['newsletter_id']
+            isOneToOne: false
             referencedRelation: 'newsletter_random'
             referencedColumns: ['id']
           }
@@ -207,24 +209,28 @@ export interface Database {
           {
             foreignKeyName: 'newsletter_sequences_source_newsletter_fkey'
             columns: ['source_newsletter']
+            isOneToOne: false
             referencedRelation: 'newsletter'
             referencedColumns: ['id']
           },
           {
             foreignKeyName: 'newsletter_sequences_source_newsletter_fkey'
             columns: ['source_newsletter']
+            isOneToOne: false
             referencedRelation: 'newsletter_random'
             referencedColumns: ['id']
           },
           {
             foreignKeyName: 'newsletter_sequences_target_newsletter_fkey'
             columns: ['target_newsletter']
+            isOneToOne: false
             referencedRelation: 'newsletter'
             referencedColumns: ['id']
           },
           {
             foreignKeyName: 'newsletter_sequences_target_newsletter_fkey'
             columns: ['target_newsletter']
+            isOneToOne: false
             referencedRelation: 'newsletter_random'
             referencedColumns: ['id']
           }
@@ -237,7 +243,9 @@ export interface Database {
           description: string | null
           id: number
           image: string | null
+          origin_url: string | null
           title: string | null
+          user_id: string | null
           views: number | null
         }
         Insert: {
@@ -246,7 +254,9 @@ export interface Database {
           description?: string | null
           id?: number
           image?: string | null
+          origin_url?: string | null
           title?: string | null
+          user_id?: string | null
           views?: number | null
         }
         Update: {
@@ -255,7 +265,9 @@ export interface Database {
           description?: string | null
           id?: number
           image?: string | null
+          origin_url?: string | null
           title?: string | null
+          user_id?: string | null
           views?: number | null
         }
         Relationships: []
@@ -316,18 +328,21 @@ export interface Database {
           {
             foreignKeyName: 'users_id_fkey'
             columns: ['id']
+            isOneToOne: true
             referencedRelation: 'users'
             referencedColumns: ['id']
           },
           {
             foreignKeyName: 'users_newsletter_id_fkey'
             columns: ['newsletter_id']
+            isOneToOne: false
             referencedRelation: 'newsletter'
             referencedColumns: ['id']
           },
           {
             foreignKeyName: 'users_newsletter_id_fkey'
             columns: ['newsletter_id']
+            isOneToOne: false
             referencedRelation: 'newsletter_random'
             referencedColumns: ['id']
           }
@@ -384,8 +399,11 @@ export interface Database {
           custom_url: string | null
           description: string | null
           image: string | null
+          ogs_id: number | null
           origin_url: string | null
           title: string | null
+          urls_id: number | null
+          user_id: string | null
           views: number | null
         }
         Relationships: []

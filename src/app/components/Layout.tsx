@@ -1,7 +1,10 @@
+'use client'
 import Link from 'next/link'
 import React, { PropsWithChildren } from 'react'
 import Footer from './Footer'
 import ThemeToogleButton from './ToogleThemeButton'
+import AuthModal from './AuthModal'
+import AuthButton from './AuthButton'
 
 const Layout = ({ children, className }: PropsWithChildren<{ className?: string }>) => {
   return (
@@ -10,10 +13,14 @@ const Layout = ({ children, className }: PropsWithChildren<{ className?: string 
         <Link className='font-GangwonState dark:text-white' href={'/'}>
           PLINK_
         </Link>
-        <ThemeToogleButton />
+        <div className='flex items-center gap-5'>
+          <AuthButton />
+          <ThemeToogleButton />
+        </div>
       </nav>
       <main className={className}>{children}</main>
       <Footer />
+      <AuthModal />
     </div>
   )
 }

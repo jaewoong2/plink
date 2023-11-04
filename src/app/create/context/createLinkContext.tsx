@@ -1,5 +1,5 @@
 import { CreateLinkAction, CreateLinkState } from '@/types'
-import React, { PropsWithChildren, createContext, useEffect, useReducer } from 'react'
+import React, { PropsWithChildren, createContext, useCallback, useEffect, useReducer } from 'react'
 import useGetOgData from '../hooks/useGetOgData'
 import { useToast } from '@chakra-ui/react'
 import { addHttpProtocol, isValidUrl } from '@/lib'
@@ -7,8 +7,12 @@ import useGetUUID from '../hooks/useGetUUID'
 import SaveButton from '../components/SaveButton'
 import usePostCustomLink from '../hooks/usePostCustomLink'
 import { useRouter } from 'next/navigation'
+import useGetUrl from '../hooks/useGetUrl'
+import useGetSession from '../hooks/useGetSession'
 
 const initialState: CreateLinkState = {
+  urls_id: -1,
+  ogs_id: -1,
   description: '',
   image: '',
   site_name: '',
@@ -48,24 +52,34 @@ function CreateLinkActionReducer(state: CreateLinkState, action: CreateLinkActio
 }
 type Props = {
   link: string
+  customURL?: string
+  type?: 'CREATE' | 'UPDATE'
 }
 
-export const CreateLinkProvider = ({ link, children }: PropsWithChildren<Props>) => {
+export const CreateLinkProvider = ({ link, customURL, type = 'CREATE', children }: PropsWithChildren<Props>) => {
   const protocolLink = addHttpProtocol(link)
-  const [state, dispatch] = useReducer(CreateLinkActionReducer, { ...initialState, link: protocolLink })
-  const { data, isLoading, error, isSuccess } = useGetOgData(protocolLink, { enabled: isValidUrl(protocolLink) })
+  const [state, dispatch] = useReducer(CreateLinkActionReducer, {
+    ...initialState,
+    link: protocolLink,
+    customURL: customURL ?? null,
+  })
+  const { data, isLoading, error, isSuccess } = useGetOgData(protocolLink, {
+    enabled: isValidUrl(protocolLink) && !customURL,
+  })
   const { data: uuidData } = useGetUUID({
     enabled: state.customURL === null,
   })
+  const session = useGetSession()
   const navigation = useRouter()
   const toast = useToast()
+  const { data: urlData, isSuccess: urlDataIsSuccess } = useGetUrl(customURL ?? '', { enabled: customURL !== null })
 
-  const { mutate } = usePostCustomLink({
-    onSuccess() {
+  const { mutate } = usePostCustomLink(type ?? 'CREATE', {
+    onSuccess(data) {
       toast({
         variant: 'solid',
         position: 'top',
-        title: '등록이 완료 되었습니다',
+        title: data.message,
         status: 'success',
       })
       navigation.push('/')
@@ -87,12 +101,48 @@ export const CreateLinkProvider = ({ link, children }: PropsWithChildren<Props>)
       title: state.title,
       image: state.image,
       description: state.description,
+      ogs_id: state.ogs_id,
+      urls_id: state.urls_id,
     })
   }
 
-  const onCancle = () => {
+  const onCancle = useCallback(() => {
     navigation.push('/')
-  }
+  }, [navigation])
+
+  useEffect(() => {
+    if (type === 'CREATE') return
+
+    if (!(urlDataIsSuccess && session.isSuccess)) return
+
+    if (!urlData?.data.user_id) {
+      navigation.push('/')
+    }
+
+    if (urlData?.data.user_id !== session.data?.data.session.user.id) {
+      navigation.push('/')
+    }
+  }, [urlDataIsSuccess, session, navigation, type, urlData?.data.user_id])
+
+  useEffect(() => {
+    if (urlData && urlData.data) {
+      dispatch({
+        type: 'INIT',
+        payload: {
+          description: urlData.data.description ?? '',
+          image: urlData.data.image ?? '',
+          ogs_id: urlData.data.ogs_id,
+          title: urlData.data.title ?? '',
+          customURL: urlData.data.custom_url,
+          link: urlData.data.origin_url ?? '',
+          url: urlData.data.custom_url ?? '',
+          urls_id: urlData.data.urls_id,
+          user_id: urlData.data.user_id,
+        },
+      })
+      return
+    }
+  }, [urlData, dispatch, data])
 
   useEffect(() => {
     if (data) {
