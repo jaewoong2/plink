@@ -1,12 +1,9 @@
-import { Database } from '@/types/supabase'
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import supabaseServer from '@/lib/supabaseServer'
 import { NextRequest, NextResponse } from 'next/server'
 
-export const dynamic = 'force-dynamic'
-
 export async function GET(request: NextRequest): Promise<NextResponse<null> | Response> {
-  const supabase = createRouteHandlerClient<Database>({ cookies })
+  const supabase = supabaseServer()
+
   const url = new URL(request.url)
   const params = new URLSearchParams(url.search)
   const custom_url = params.get('custom_url')

@@ -1,22 +1,20 @@
 'use client'
 import Link from 'next/link'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { twMerge } from 'tailwind-merge'
 import useIsLoggedIn from '../create/hooks/useIsLoggedIn'
 
-const AuthButton = ({ className }: JSX.IntrinsicElements['button']) => {
-  const { isLoggedIn, check, isLoading } = useIsLoggedIn()
+const AuthButton = ({ className, isLogin }: JSX.IntrinsicElements['button'] & { isLogin?: boolean }) => {
+  const { isLoggedIn: isLoggedIn_, check, isLoading } = useIsLoggedIn()
 
   const url = typeof window === 'undefined' ? '' : window.location.href
 
   const onClickSignInButton = () => {
-    if (isLoggedIn) return
-    check(false)
+    if (isLogin) return
+    check()
   }
 
-  useEffect(() => {
-    check(false)
-  }, [check])
+  const isLoggedIn = isLogin || isLoggedIn_
 
   return (
     <>

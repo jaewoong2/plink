@@ -1,17 +1,14 @@
-import { cookies } from 'next/headers'
-import { Database } from '@/types/supabase'
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { NextResponse } from 'next/server'
 import * as uuid from 'uuid'
-
-export const dynamic = 'force-dynamic'
+import supabaseServer from '@/lib/supabaseServer'
 
 const getUUID = () => {
   return uuid.v4().split('-')[0]
 }
 
 export async function GET(): Promise<NextResponse<null> | Response> {
-  const supabase = createRouteHandlerClient<Database>({ cookies })
+  const supabase = supabaseServer()
+
   try {
     const uuid = getUUID()
 

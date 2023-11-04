@@ -8,7 +8,7 @@ import SaveButton from '../components/SaveButton'
 import usePostCustomLink from '../hooks/usePostCustomLink'
 import { useRouter } from 'next/navigation'
 import useGetUrl from '../hooks/useGetUrl'
-import useGetSession from '../hooks/useGetSession'
+import useIsLoggedIn from '../hooks/useIsLoggedIn'
 
 const initialState: CreateLinkState = {
   urls_id: -1,
@@ -69,7 +69,7 @@ export const CreateLinkProvider = ({ link, customURL, type = 'CREATE', children 
   const { data: uuidData } = useGetUUID({
     enabled: state.customURL === null,
   })
-  const session = useGetSession()
+  const session = useIsLoggedIn()
   const navigation = useRouter()
   const toast = useToast()
   const { data: urlData, isSuccess: urlDataIsSuccess } = useGetUrl(customURL ?? '', { enabled: customURL !== null })
@@ -112,6 +112,8 @@ export const CreateLinkProvider = ({ link, customURL, type = 'CREATE', children 
 
   useEffect(() => {
     if (type === 'CREATE') return
+
+    session.check()
 
     if (!(urlDataIsSuccess && session.isSuccess)) return
 

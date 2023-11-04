@@ -1,17 +1,14 @@
-import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { Database } from '@/types/supabase'
 import * as uuid from 'uuid'
-
-export const dynamic = 'force-dynamic'
+import supabaseServer from '@/lib/supabaseServer'
 
 function getExtension(filename: string) {
   return filename.split('.').pop()
 }
 
 export async function POST(request: NextRequest) {
-  const supabase = createRouteHandlerClient<Database>({ cookies })
+  const supabase = supabaseServer()
+
   try {
     const requestData = await request.formData()
 

@@ -86,7 +86,7 @@ const UrlCustom = () => {
       <div className='my-1 flex w-full flex-col px-6'>
         <Input
           readOnly={!isLoggedIn}
-          onClick={() => check()}
+          onClick={check}
           prefixElement={
             <div className='flex items-center justify-center'>
               <select className='mr-2 rounded-lg rounded-r-none bg-transparent px-5 py-2 text-center text-sm text-gray-400 dark:text-white'>

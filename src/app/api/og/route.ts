@@ -1,12 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getMetaTags } from '@/lib/getMetaTags'
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
-import { Database } from '@/types/supabase'
 import { OGS, URLS, URLS_INFOS } from '@/types'
 import { isValidUrl } from '@/lib'
-
-export const dynamic = 'force-dynamic'
+import supabaseServer from '@/lib/supabaseServer'
 
 export async function GET(request: NextRequest): Promise<NextResponse<null> | Response> {
   try {
@@ -30,7 +26,8 @@ export async function GET(request: NextRequest): Promise<NextResponse<null> | Re
 }
 
 export async function POST(request: NextRequest) {
-  const supabase = createRouteHandlerClient<Database>({ cookies })
+  const supabase = supabaseServer()
+
   try {
     const { custom_url, description, image, origin_url, title }: Required<OGS> & Required<URLS> = await request.json()
     const { data } = await supabase.from('urls').select('*').eq('custom_url', custom_url).single()
@@ -89,7 +86,8 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PATCH(request: NextRequest) {
-  const supabase = createRouteHandlerClient<Database>({ cookies })
+  const supabase = supabaseServer()
+
   try {
     const response = await supabase.auth.getSession()
 

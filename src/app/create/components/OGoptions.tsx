@@ -13,7 +13,7 @@ const OGoptions = () => {
   const dispatch = useCreateLinkAction()
 
   const onClickInput = () => {
-    check(true)
+    check()
   }
 
   const onChangeImage = async (e: React.ChangeEvent<HTMLInputElement>) => {

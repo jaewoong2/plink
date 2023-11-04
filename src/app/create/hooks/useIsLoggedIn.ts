@@ -2,37 +2,30 @@ import { UseQueryOptions } from '@tanstack/react-query'
 import useGetSession from './useGetSession'
 import { AxiosError } from 'axios'
 import { Session } from '@supabase/supabase-js'
-import { useState } from 'react'
+import { useCallback, useMemo } from 'react'
 
-type Data = { data: { session: Session } }
+type Data = { data: { session: Session } } & { show: boolean }
 
 type Prams = Omit<UseQueryOptions<Data, AxiosError<{ message: string }>>, 'queryKey'>
 
 const useIsLoggedIn = (options?: Prams) => {
-  const [show, setShow] = useState(true)
-  const { data, refetch, ...rest } = useGetSession({ ...options, enabled: false, retry: 1 })
+  const { data, refetch, ...rest } = useGetSession(true, { ...options, enabled: false, retry: 1 })
 
-  if (!data?.data.session) {
-    return {
-      isLoggedIn: false,
-      check: (isShow = true) => {
-        setShow(isShow)
-        refetch()
-      },
-      show,
+  const check = useCallback(() => {
+    refetch()
+  }, [refetch])
+
+  const value = useMemo(
+    () => ({
+      data,
+      isLoggedIn: !data?.data.session ? false : true,
+      check,
       ...rest,
-    }
-  }
+    }),
+    [check, data, rest]
+  )
 
-  return {
-    isLoggedIn: true,
-    check: (isShow = true) => {
-      setShow(isShow)
-      refetch()
-    },
-    show,
-    ...rest,
-  }
+  return value
 }
 
 export default useIsLoggedIn

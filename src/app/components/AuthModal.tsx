@@ -8,7 +8,7 @@ import useMagicLinkLogin from '../create/hooks/useMagicLinkLogin'
 
 const AuthModal = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const { isLoggedIn, errorUpdatedAt, error, show } = useIsLoggedIn({ enabled: false })
+  const { isLoggedIn, errorUpdatedAt, error } = useIsLoggedIn({ enabled: false })
   const [email, setEmail] = useState('')
   const toast = useToast()
   const modal = useModal({
@@ -58,14 +58,14 @@ const AuthModal = () => {
   }
 
   useEffect(() => {
-    if (error && show) {
+    if (error) {
       setIsOpen(!isLoggedIn)
     }
 
     return () => {
       setIsOpen(false)
     }
-  }, [isLoggedIn, errorUpdatedAt, error, show])
+  }, [isLoggedIn, errorUpdatedAt, error])
 
   return (
     <SimpleModal

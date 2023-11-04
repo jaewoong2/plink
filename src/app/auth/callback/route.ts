@@ -1,9 +1,8 @@
-import { Database } from '@/types/supabase'
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import supabaseServer from '@/lib/supabaseServer'
 import { NextResponse } from 'next/server'
 
 import type { NextRequest } from 'next/server'
+export const dynamic = 'force-dynamic'
 
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url)
@@ -11,7 +10,7 @@ export async function GET(request: NextRequest) {
   const redirectUrl = requestUrl.searchParams.get('redirectUrl')
 
   if (code) {
-    const supabase = createRouteHandlerClient<Database>({ cookies })
+    const supabase = supabaseServer()
     await supabase.auth.exchangeCodeForSession(code)
   }
 
