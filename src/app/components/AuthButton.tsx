@@ -5,7 +5,8 @@ import { twMerge } from 'tailwind-merge'
 import useIsLoggedIn from '../create/hooks/useIsLoggedIn'
 
 const AuthButton = ({ className, isLogin }: JSX.IntrinsicElements['button'] & { isLogin?: boolean }) => {
-  const { isLoggedIn: isLoggedIn_, check, isLoading } = useIsLoggedIn()
+  const { check, isLoading } = useIsLoggedIn()
+  const { isLoggedIn: isLoggedIn_ } = useIsLoggedIn({ enabled: true, show: false })
 
   const url = typeof window === 'undefined' ? '' : window.location.href
 
@@ -18,18 +19,11 @@ const AuthButton = ({ className, isLogin }: JSX.IntrinsicElements['button'] & { 
 
   return (
     <>
-      {isLoading && (
-        <div
-          className={twMerge(
-            'loading loading-dots cursor-not-allowed list-none rounded-xl px-3 py-3 text-left text-sm font-bold hover:bg-slate-50 dark:hover:bg-darkBg-100',
-            className
-          )}
-        ></div>
-      )}
+      {isLoading && <div className={twMerge('loading loading-dots cursor-not-allowed list-none', className)}></div>}
       {!isLoading && isLoggedIn && (
         <Link
           className={twMerge(
-            'cursor-pointer list-none rounded-xl px-3 py-3 text-left text-sm font-bold hover:bg-slate-50 dark:hover:bg-darkBg-100',
+            'cursor-pointer list-none rounded-xl text-left text-sm font-bold hover:bg-slate-50 dark:hover:bg-darkBg-100',
             className
           )}
           href={`/auth/signout?redirectUrl=${url}`}
@@ -42,7 +36,7 @@ const AuthButton = ({ className, isLogin }: JSX.IntrinsicElements['button'] & { 
       {!isLoading && !isLoggedIn && (
         <button
           className={twMerge(
-            'cursor-pointer list-none rounded-xl px-3 py-3 text-left text-sm font-bold hover:bg-slate-50 dark:hover:bg-darkBg-100',
+            'cursor-pointer list-none rounded-xl text-left text-sm font-bold hover:bg-slate-50 dark:hover:bg-darkBg-100',
             className
           )}
           aria-label='로그인'

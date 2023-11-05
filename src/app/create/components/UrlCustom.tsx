@@ -15,7 +15,7 @@ const UrlCustom = () => {
   const { image, title, customURL, link, isLoading, isError: error } = useCreateLinkState()
   const [isEdit, setIsEdit] = useState(false)
   const navigation = useRouter()
-  const { refetch } = useGetUUID({ enabled: false })
+  const { refetch, isFetching: uuidLoading } = useGetUUID({ enabled: false })
 
   const [onChangeOriginURL] = useDebounceCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     navigation.push(`create?link=${e.target.value}`)
@@ -31,6 +31,8 @@ const UrlCustom = () => {
   const onClickRandomLinkGenerate = () => {
     refetch()
   }
+
+  useIsLoggedIn({ enabled: true, show: false, refetchOnReconnect: true, refetchOnWindowFocus: true })
 
   return (
     <div className='flex flex-col items-center'>
@@ -101,9 +103,10 @@ const UrlCustom = () => {
           helper={
             <div className='flex w-full justify-end pt-2 text-xs'>
               <button
+                disabled={uuidLoading}
                 type='button'
                 onClick={onClickRandomLinkGenerate}
-                className='rounded-xl font-normal text-primary-500 transition-transform active:scale-95 dark:text-white'
+                className='rounded-xl pr-4 font-normal text-primary-500 transition-transform active:scale-95 disabled:cursor-not-allowed dark:text-white'
               >
                 랜덤 링크 생성
               </button>

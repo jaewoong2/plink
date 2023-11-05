@@ -13,7 +13,7 @@ const Layout = async ({ children, className }: PropsWithChildren<{ className?: s
     <div className='hero-background z-10 min-h-screen w-full dark:bg-darkBg-600'>
       <nav className='fixed inset-x-0 top-0 z-30 flex w-full items-center justify-between border-b border-gray-200 bg-white/25 p-3 backdrop-blur-lg transition-all dark:border-darkBg-200 dark:bg-darkBg-300/10'>
         <Link className='font-GangwonState dark:text-white' href={'/'}>
-          PLINK_
+          {process.env.NEXT_PUBLIC_NAME}
         </Link>
         <div className='flex items-center gap-5'>
           <AuthButton isLogin={Boolean(session?.data.session)} />

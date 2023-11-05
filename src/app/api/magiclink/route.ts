@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import supabaseServer from '@/lib/supabaseServer'
+import { cookies } from 'next/headers'
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+
+export const dynamic = 'force-dynamic'
 
 export async function POST(request: NextRequest): Promise<NextResponse<null> | Response> {
   try {
@@ -9,7 +12,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<null> | R
       return NextResponse.json({ message: '이메일을 정확히 입력 해주세요' }, { status: 200 })
     }
 
-    const supabase = supabaseServer()
+    const supabase = createRouteHandlerClient({ cookies })
 
     const session = await supabase.auth.getSession()
 

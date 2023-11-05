@@ -6,13 +6,14 @@ import { useRouter } from 'next/navigation'
 import { isValidUrl } from '@/lib'
 import usePostCustomLink from '../hooks/usePostCustomLink'
 import { useToast } from '@chakra-ui/react'
+import Link from 'next/link'
 
 type Props = {
   type?: 'CREATE' | 'UPDATE'
 }
 
 const RightSection = ({ type }: Props) => {
-  const { description, image, url, link, title, isLoading, customURL, ogs_id, urls_id } = useCreateLinkState()
+  const { description, image, link, title, isLoading, customURL, ogs_id, urls_id } = useCreateLinkState()
   const toast = useToast()
   const navigation = useRouter()
 
@@ -62,7 +63,7 @@ const RightSection = ({ type }: Props) => {
         <div className='divider px-12 py-3 text-xs font-semibold text-[#05d686] before:bg-[#05d686] after:bg-[#05d686]'>
           네이버
         </div>
-        <div className='h-[340px] w-[90%] overflow-hidden border bg-white' aria-label='네이버 SNS 카드'>
+        <Link href={link} className='h-[340px] w-[90%] overflow-hidden border bg-white' aria-label='네이버 SNS 카드'>
           <div className={'h-[220px] max-h-[220px] w-auto border-b'}>
             {image && (
               <CardImage image={image} alt='preview' className='cursor-pointer object-cover' isLoading={isLoading} />
@@ -79,13 +80,13 @@ const RightSection = ({ type }: Props) => {
               {isValidUrl(link) && new URL(link).hostname}
             </div>
           </div>
-        </div>
+        </Link>
 
         {/* 카카오 */}
         <div className='divider px-12 py-3 text-xs font-semibold text-[#7a753f] before:bg-[#F7E600] after:bg-[#F7E600]'>
           카카오
         </div>
-        <div className='h-[340px] w-[90%] overflow-hidden border bg-white' aria-label='네이버 SNS 카드'>
+        <Link href={link} className='h-[340px] w-[90%] overflow-hidden border bg-white' aria-label='네이버 SNS 카드'>
           <div className='h-[220px] max-h-[220px] w-auto border-b'>
             {image && (
               <CardImage image={image} alt='preview' className='cursor-pointer object-cover' isLoading={isLoading} />
@@ -102,7 +103,7 @@ const RightSection = ({ type }: Props) => {
               {isValidUrl(link) && new URL(link).hostname}
             </div>
           </div>
-        </div>
+        </Link>
       </div>
       <SaveButton
         onClick={onClickSaveButton}

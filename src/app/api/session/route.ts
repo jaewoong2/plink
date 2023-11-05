@@ -11,11 +11,11 @@ export async function GET(request: NextRequest) {
     const response = await supabase.auth.getSession()
 
     if (!response.data) {
-      return NextResponse.json({ ...response, show: show === 'true' ? true : false }, { status: 401 })
+      throw NextResponse.error()
     }
 
     if (!response.data.session) {
-      return NextResponse.json({ ...response, show: show === 'true' ? true : false }, { status: 401 })
+      throw NextResponse.error()
     }
 
     return NextResponse.json({ ...response, show: show === 'true' ? true : false }, { status: 200 })

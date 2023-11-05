@@ -4,12 +4,16 @@ import { AxiosError } from 'axios'
 import { Session } from '@supabase/supabase-js'
 import { useCallback, useMemo } from 'react'
 
-type Data = { data: { session: Session } } & { show: boolean }
+type Data = { data: { session: Session } }
 
-type Prams = Omit<UseQueryOptions<Data, AxiosError<{ message: string }>>, 'queryKey'>
+type Prams = Omit<UseQueryOptions<Data, AxiosError<{ message: string; show: boolean }>>, 'queryKey'> & {
+  show?: boolean
+}
 
 const useIsLoggedIn = (options?: Prams) => {
-  const { data, refetch, ...rest } = useGetSession(true, { ...options, enabled: false, retry: 1 })
+  const isShow = useMemo(() => (typeof options?.show === 'undefined' ? true : options.show), [options?.show])
+
+  const { data, refetch, error, ...rest } = useGetSession(isShow, { enabled: false, retry: 1, ...options })
 
   const check = useCallback(() => {
     refetch()
@@ -18,11 +22,13 @@ const useIsLoggedIn = (options?: Prams) => {
   const value = useMemo(
     () => ({
       data,
+      isShow: error?.response?.data.show,
       isLoggedIn: !data?.data.session ? false : true,
       check,
+      error,
       ...rest,
     }),
-    [check, data, rest]
+    [check, data, rest, error]
   )
 
   return value
