@@ -1,10 +1,13 @@
 import { Metadata } from 'next'
+import { Analytics } from '@vercel/analytics/react'
+
 import { Providers } from '@/lib/Provider'
 import { ThemeProviders } from '@/lib/ThemeProvider'
 
 import './font.css'
 import './globals.css'
 import { METADATA } from '@/constants'
+import GoogleAnalytics from '@/lib/GoogleAnalytics'
 
 export const metadata: Metadata = METADATA
 export const dynamic = 'force-dynamic'
@@ -17,10 +20,12 @@ type Props = {
 export default function RootLayout({ children }: Props) {
   return (
     <html lang='kr' className='h-full min-h-screen'>
+      <GoogleAnalytics GA_TRACKING_ID='G-2J9LHLSEMG' />
       <body suppressHydrationWarning={true} className='relative h-full min-h-screen overflow-scroll bg-white'>
         <Providers>
           <ThemeProviders>{children}</ThemeProviders>
         </Providers>
+        <Analytics />
       </body>
     </html>
   )

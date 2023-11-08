@@ -14,7 +14,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   return mounted ? (
     <QueryClientProvider client={queryClient}>
-      <ChakraProvider resetCSS>
+      <ChakraProvider resetCSS toastOptions={{ defaultOptions: { position: 'top' } }}>
         <CacheProvider>{children}</CacheProvider>
       </ChakraProvider>
     </QueryClientProvider>

@@ -2,7 +2,7 @@ import React from 'react'
 import LinkCard from './LinkCard'
 import { getRegistedUrls, getSession } from '../supabase-server'
 
-const CURRENT_URL = process.env.NEXT_PUBLIC_CURRENT_URL ?? 'localhost:3000'
+const CURRENT_URL = process.env.NEXT_PUBLIC_CURRENT_URL ?? 'https://prlc.kr'
 
 const LinkCards = async () => {
   const urls = await getRegistedUrls()
