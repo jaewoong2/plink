@@ -16,7 +16,7 @@ export const METADATA: Metadata = {
   creator: '@jaewoong2',
   title: '뉴섭 | 나에게 맞는 뉴스레터를 추천 받으세요',
   description: '내가 원하는 뉴스레터를 찾아보고 구독 하세요 🤩',
-  metadataBase: new URL('https://newsubs.site'),
+  metadataBase: new URL('https://prlc.kr'),
   openGraph: {
     title: '뉴섭 | 나에게 맞는 뉴스레터를 추천 받으세요',
     description: '내가 원하는 뉴스레터를 찾아보고 구독 하세요 🤩',

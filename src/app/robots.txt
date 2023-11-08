@@ -1,4 +1,4 @@
 User-Agent: *
 Allow: /
 Disallow: /register/
-Sitemap:https://newsubs.site/sitemap.xml
+Sitemap:https://prlc.kr/sitemap.xml

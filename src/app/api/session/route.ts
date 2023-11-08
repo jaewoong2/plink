@@ -1,8 +1,12 @@
-import supabaseServer from '@/lib/supabaseServer'
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { NextRequest, NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
+
+export const dynamic = 'force-dynamic'
 
 export async function GET(request: NextRequest) {
-  const supabase = supabaseServer()
+  const supabase = createRouteHandlerClient({ cookies })
+
   const url = new URL(request.url)
   const params = new URLSearchParams(url.search)
   const show = params.get('show')

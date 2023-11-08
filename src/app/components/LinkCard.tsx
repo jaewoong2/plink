@@ -22,19 +22,19 @@ const LinkCard = ({ imageSrc, customizedLink, originalLink, customURL, options }
         </figure>
         <div className='flex h-full w-[calc(100%-40px)] flex-col justify-center overflow-clip'>
           <div className='flex w-full items-center gap-3'>
-            <a
+            <Link
               target='_blank'
               referrerPolicy='no-referrer'
-              className='link-primary link line-clamp-1 text-clip break-words font-Pretendard text-sm font-semibold'
+              className='link-primary link line-clamp-1 text-clip break-words text-xs tracking-wide'
               href={customizedLink ?? '#'}
             >
               {customizedLink}
-            </a>
+            </Link>
           </div>
           <Link
             target='_blank'
             referrerPolicy='no-referrer'
-            className='link-neutral link line-clamp-2 break-words font-Pretendard text-sm font-semibold dark:text-gray-300'
+            className='link-neutral link line-clamp-2 break-words text-xs tracking-wide dark:text-gray-300'
             href={originalLink ?? '#'}
           >
             {originalLink}

@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from 'react'
+import TextAnimation from './TextAnimation'
 
 type Props = {
   topText?: React.ReactNode
@@ -6,17 +7,21 @@ type Props = {
 }
 
 const INITIAL_PROPS: Props = {
+  topText: (
+    <div className='framer-motion flex items-center justify-center py-10 text-gray-400 dark:text-white'>
+      <TextAnimation text='PRLC' />
+    </div>
+  ),
   bottomText: (
-    <>
-      <p className='font-GangwonState text-xl font-semibold text-gray-600 dark:text-white'>
+    <div className='flex flex-col gap-3'>
+      <p className='font-GangwonState text-xl text-gray-600 dark:text-white max-sm:text-lg'>
         링크를 단축하고, QR Code로 만들어서 접속 통계를 확인 해요
       </p>
-      <p className='font-GangwonState text-xl font-semibold text-gray-600 dark:text-white'>
+      <p className='font-GangwonState text-xl text-gray-600 dark:text-white max-sm:text-lg'>
         링크를 커스텀 하고, 더욱 이쁘게 공유 해요
       </p>
-    </>
+    </div>
   ),
-  topText: <div className='pb-10 font-tossFace dark:text-white'>🖇️</div>,
 }
 
 const HeroTitle = ({
