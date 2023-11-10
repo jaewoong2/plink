@@ -9,25 +9,25 @@ export const IMAGE = {
 
 export const METADATA: Metadata = {
   generator: 'Next.js',
-  applicationName: '뉴섭 | 나에게 맞는 뉴스레터를 추천 받으세요',
+  applicationName: 'Plrc | Url을 이쁘게, 짧게, 커스텀 하세요',
   referrer: 'origin-when-cross-origin',
   keywords: ['뉴스레터', 'newsletter', '뉴스레터구독', '뉴스레터추천', '뉴스레터 추천'],
   authors: [{ name: '@jaewoong2', url: 'https://github.com/jaewoong2' }],
   creator: '@jaewoong2',
-  title: '뉴섭 | 나에게 맞는 뉴스레터를 추천 받으세요',
-  description: '내가 원하는 뉴스레터를 찾아보고 구독 하세요 🤩',
+  title: 'Plrc | Url을 이쁘게, 짧게, 커스텀 하세요',
+  description: '내가 원하는 URL 로 이쁘게, 짧게, 커스텀 하세요. 🤩',
   metadataBase: new URL('https://prlc.kr'),
   openGraph: {
-    title: '뉴섭 | 나에게 맞는 뉴스레터를 추천 받으세요',
-    description: '내가 원하는 뉴스레터를 찾아보고 구독 하세요 🤩',
+    title: 'Plrc | Url을 이쁘게, 짧게, 커스텀 하세요',
+    description: '내가 원하는 URL 로 이쁘게, 짧게, 커스텀 하세요. 🤩',
     images: IMAGE.placeholder,
   },
   twitter: {
     card: 'summary_large_image',
     images: IMAGE.placeholder,
     site: BASEURL,
-    title: '뉴섭 | 나에게 맞는 뉴스레터를 추천 받으세요',
-    description: '내가 원하는 뉴스레터를 찾아보고 구독 하세요 🤩',
+    title: 'Plrc | Url을 이쁘게, 짧게, 커스텀 하세요',
+    description: '내가 원하는 URL 로 이쁘게, 짧게, 커스텀 하세요. 🤩',
   },
 }
 
@@ -58,7 +58,7 @@ export const ARTICLE_ASIDE_LINK_ITEM = [
 ]
 
 export const SEO_TITLE =
-  '뉴섭 | 나에게 맞는 뉴스레터를 추천 받으세요. 수많은 뉴스레터들을 모아, 다양한 뉴스레터를 추천 하는 서비스를 제공 합니다'
+  'Plrc | Url을 이쁘게, 짧게, 커스텀 하세요. 수많은 뉴스레터들을 모아, 다양한 뉴스레터를 추천 하는 서비스를 제공 합니다'
 
 export const CATEGORY_ICONS = {
   개발: '💻',

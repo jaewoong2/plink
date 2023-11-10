@@ -1,5 +1,4 @@
 import React, { PropsWithChildren } from 'react'
-import TextAnimation from './TextAnimation'
 
 type Props = {
   topText?: React.ReactNode
@@ -7,11 +6,6 @@ type Props = {
 }
 
 const INITIAL_PROPS: Props = {
-  topText: (
-    <div className='framer-motion flex items-center justify-center py-10 text-gray-400 dark:text-white'>
-      <TextAnimation text='PRLC' />
-    </div>
-  ),
   bottomText: (
     <div className='flex flex-col gap-3'>
       <p className='font-GangwonState text-xl text-gray-600 dark:text-white max-sm:text-lg'>
@@ -30,7 +24,7 @@ const HeroTitle = ({
   bottomText = INITIAL_PROPS.bottomText,
 }: PropsWithChildren<Props>) => {
   return (
-    <div className='text-center'>
+    <div className='mt-20 text-center'>
       <div className='text-4xl font-bold leading-[1.15] text-black dark:text-white sm:text-6xl sm:leading-[1.15]'>
         {topText}
         <div className='bg-gradient-to-r from-blue-500 via-purple-400 to-violet-500 bg-clip-text font-GangwonState text-transparent dark:text-white'>

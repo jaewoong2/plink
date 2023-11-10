@@ -10,7 +10,7 @@ const Layout = async ({ children, className }: PropsWithChildren<{ className?: s
   const session = await getSession()
 
   return (
-    <div className='hero-background z-10 min-h-screen w-full dark:bg-darkBg-600'>
+    <div className='hero-background min-h-screen w-full dark:bg-darkBg-600'>
       <nav className='fixed inset-x-0 top-0 z-30 flex w-full items-center justify-between border-b border-gray-200 bg-white/25 p-3 backdrop-blur-lg transition-all dark:border-darkBg-200 dark:bg-darkBg-300/10'>
         <Link className='font-GangwonState dark:text-white' href={'/'}>
           {process.env.NEXT_PUBLIC_NAME}

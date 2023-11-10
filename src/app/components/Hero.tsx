@@ -25,11 +25,7 @@ const Hero = () => {
       <div className='flex w-full p-5'>
         <div className='flex w-full flex-col items-center justify-center gap-2 px-4 py-6'>
           <div className='w-full py-6'>
-            <HeroTitle>
-              {/* <h2 className='bg-gradient-to-r from-blue-500 via-purple-400 to-violet-500 bg-clip-text font-GangwonState text-transparent'>
-                I AM URL - <strong className='font-GangwonState text-orange-400'>[커스텀]</strong> 이에요.
-              </h2> */}
-            </HeroTitle>
+            <HeroTitle></HeroTitle>
             <form
               onSubmit={(event) => {
                 event.preventDefault()
