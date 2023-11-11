@@ -15,7 +15,7 @@ type Props = {
 
 const LinkCard = ({ imageSrc, customizedLink, originalLink, customURL, options }: Props) => {
   return (
-    <div className='flex items-center justify-between rounded-md border p-2 px-3 transition-all will-change-transform hover:-translate-y-1  hover:shadow-md dark:border-darkBg-100 dark:bg-darkBg-400'>
+    <div className='flex min-h-[80px] items-center justify-between rounded-md border p-2 px-3 transition-all will-change-transform  hover:-translate-y-1 hover:shadow-md dark:border-darkBg-100 dark:bg-darkBg-400'>
       <div className='flex w-[90%] items-center gap-3'>
         <figure className={'h-10 w-10 overflow-hidden rounded-full border'}>
           <CardImage image={imageSrc} className='h-full w-auto object-cover' alt={'미리보기'} />
@@ -28,7 +28,7 @@ const LinkCard = ({ imageSrc, customizedLink, originalLink, customURL, options }
               className='link-primary link line-clamp-1 text-clip break-words text-xs tracking-wide'
               href={customizedLink ?? '#'}
             >
-              {customizedLink}
+              {decodeURIComponent(customizedLink ?? '')}
             </Link>
           </div>
           <Link
@@ -50,7 +50,9 @@ const LinkCard = ({ imageSrc, customizedLink, originalLink, customURL, options }
             <FiSettings className='text-lg font-bold text-gray-500 dark:text-white' />
           </Link>
           <button className='btn-ghost btn-sm btn-circle btn'>
-            <BiBarChartAlt className='text-lg font-bold text-gray-500 dark:text-white' />
+            <Link href={`/analytics?path=${customURL}`} className='btn-ghost btn-sm btn-circle btn'>
+              <BiBarChartAlt className='text-lg font-bold text-gray-500 dark:text-white' />
+            </Link>
           </button>
         </div>
       )}

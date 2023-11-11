@@ -16,8 +16,7 @@ export async function getUrlByCustomUrl(customUrl: string) {
   const supabase = createServerSupabaseClient()
 
   try {
-    const urls = await supabase.from('url_infos').select('*').eq('custom_url', decodeURIComponent(customUrl)).single()
-
+    const urls = await supabase.from('url_infos').select('*').eq('custom_url', customUrl).maybeSingle()
     if (!urls.data) {
       throw new Error('No data found')
     }

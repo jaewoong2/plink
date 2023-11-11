@@ -112,6 +112,7 @@ export const CreateLinkProvider = ({ link, customURL, type = 'CREATE', children 
 
   useEffect(() => {
     if (type === 'CREATE') return
+    if (session.isFetched) return
 
     session.check()
 
@@ -135,7 +136,7 @@ export const CreateLinkProvider = ({ link, customURL, type = 'CREATE', children 
           image: urlData.data.image ?? '',
           ogs_id: urlData.data.ogs_id,
           title: urlData.data.title ?? '',
-          customURL: urlData.data.custom_url,
+          customURL: decodeURIComponent(urlData.data.custom_url ?? ''),
           link: urlData.data.origin_url ?? '',
           url: urlData.data.custom_url ?? '',
           urls_id: urlData.data.urls_id,

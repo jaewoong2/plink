@@ -1,9 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server'
 import { BetaAnalyticsDataClient } from '@google-analytics/data'
-import { getCredentials } from '@/lib/getCredentials'
 
 const analyticsDataClient = new BetaAnalyticsDataClient()
-async function runReport(propertyId: string) {
+export async function runReport(propertyId: string, pagePath: string | null) {
   const [response] = await analyticsDataClient.runReport({
     property: `properties/${propertyId}`,
     dateRanges: [
@@ -16,7 +14,19 @@ async function runReport(propertyId: string) {
       {
         name: 'pagePath',
       },
+      {
+        name: 'date', // 날짜 차원 추가
+      },
     ],
+    dimensionFilter: {
+      filter: {
+        fieldName: 'pagePath',
+        stringFilter: {
+          matchType: 'EXACT',
+          value: pagePath ?? '/',
+        },
+      },
+    },
     metrics: [
       {
         name: 'screenPageViews',
@@ -27,17 +37,15 @@ async function runReport(propertyId: string) {
   return response
 }
 
-export async function GET(request: NextRequest) {
+export async function getReport(path: string) {
   try {
-    await getCredentials()
+    const data = await runReport(`${process.env.NEXT_PUBLIC_GA_PROPOERTY_ID}`, path)
 
-    const data = await runReport(`${process.env.NEXT_PUBLIC_GA_PROPOERTY_ID}`)
-
-    return NextResponse.json({ message: data }, { status: 401 })
+    return data.rows?.[0]
   } catch (error) {
     if (error instanceof Error) {
-      return NextResponse.json({ message: error.message }, { status: 401 })
+      throw new Error('Error!')
     }
-    return NextResponse.json({ message: '메시지 전송 실패' }, { status: 401 })
+    throw new Error('Error!')
   }
 }

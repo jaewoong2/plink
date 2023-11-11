@@ -47,6 +47,7 @@ const Hero = () => {
                 }
                 postfix={
                   <Link
+                    prefetch={false}
                     onClick={(event) => {
                       if (isError) {
                         event.preventDefault()

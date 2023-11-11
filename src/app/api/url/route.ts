@@ -13,7 +13,7 @@ export async function GET(request: NextRequest): Promise<NextResponse<null> | Re
       throw new Error('데이터가 없습니다')
     }
 
-    const ogs = await supabase.from('url_infos').select('*').eq('custom_url', custom_url).single()
+    const ogs = await supabase.from('url_infos').select('*').eq('custom_url', encodeURIComponent(custom_url)).single()
 
     if (!ogs.data || ogs.error) {
       throw new Error('데이터가 없습니다')

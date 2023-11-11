@@ -53,7 +53,9 @@ export async function POST(request: NextRequest) {
         }
       )
     }
-    const { status: urlStatus } = await supabase.from('urls').insert({ custom_url, origin_url })
+    const { status: urlStatus } = await supabase
+      .from('urls')
+      .insert({ custom_url: encodeURIComponent(custom_url), origin_url })
     const response = await supabase.auth.getSession()
 
     if (!response.data.session || response.error) {
@@ -63,9 +65,14 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    const { status: ogStatus } = await supabase
-      .from('ogs')
-      .insert({ custom_url, description, title, image, user_id: response.data.session.user.id, views: 0 })
+    const { status: ogStatus } = await supabase.from('ogs').insert({
+      custom_url: encodeURIComponent(custom_url),
+      description,
+      title,
+      image,
+      user_id: response.data.session.user.id,
+      views: 0,
+    })
 
     if (199 < urlStatus && urlStatus < 300 && 199 < ogStatus && ogStatus < 300) {
       return NextResponse.json({
@@ -140,7 +147,10 @@ export async function PATCH(request: NextRequest) {
       )
     }
 
-    const { status: urlStatus } = await supabase.from('urls').update({ custom_url, origin_url }).eq('id', urls_id)
+    const { status: urlStatus } = await supabase
+      .from('urls')
+      .update({ custom_url: encodeURIComponent(custom_url), origin_url })
+      .eq('id', urls_id)
 
     if ((!response.data || response.error) && 199 < urlStatus && urlStatus < 300) {
       return NextResponse.json({
@@ -151,7 +161,7 @@ export async function PATCH(request: NextRequest) {
 
     const { status: ogStatus } = await supabase
       .from('ogs')
-      .update({ custom_url, description, title, image, views: 0 })
+      .update({ custom_url: encodeURIComponent(custom_url), description, title, image, views: 0 })
       .eq('id', ogs_id)
       .eq('user_id', response.data.session.user.id)
 

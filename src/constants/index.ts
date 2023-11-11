@@ -9,16 +9,16 @@ export const IMAGE = {
 
 export const METADATA: Metadata = {
   generator: 'Next.js',
-  applicationName: 'Plrc | Url을 이쁘게, 짧게, 커스텀 하세요',
+  applicationName: 'Prlc | Url을 이쁘게, 짧게, 커스텀 하세요',
   referrer: 'origin-when-cross-origin',
   keywords: ['뉴스레터', 'newsletter', '뉴스레터구독', '뉴스레터추천', '뉴스레터 추천'],
   authors: [{ name: '@jaewoong2', url: 'https://github.com/jaewoong2' }],
   creator: '@jaewoong2',
-  title: 'Plrc | Url을 이쁘게, 짧게, 커스텀 하세요',
+  title: 'Prlc | Url을 이쁘게, 짧게, 커스텀 하세요',
   description: '내가 원하는 URL 로 이쁘게, 짧게, 커스텀 하세요. 🤩',
   metadataBase: new URL('https://prlc.kr'),
   openGraph: {
-    title: 'Plrc | Url을 이쁘게, 짧게, 커스텀 하세요',
+    title: 'Prlc | Url을 이쁘게, 짧게, 커스텀 하세요',
     description: '내가 원하는 URL 로 이쁘게, 짧게, 커스텀 하세요. 🤩',
     images: IMAGE.placeholder,
   },
@@ -26,7 +26,7 @@ export const METADATA: Metadata = {
     card: 'summary_large_image',
     images: IMAGE.placeholder,
     site: BASEURL,
-    title: 'Plrc | Url을 이쁘게, 짧게, 커스텀 하세요',
+    title: 'Prlc | Url을 이쁘게, 짧게, 커스텀 하세요',
     description: '내가 원하는 URL 로 이쁘게, 짧게, 커스텀 하세요. 🤩',
   },
 }
@@ -58,7 +58,7 @@ export const ARTICLE_ASIDE_LINK_ITEM = [
 ]
 
 export const SEO_TITLE =
-  'Plrc | Url을 이쁘게, 짧게, 커스텀 하세요. 수많은 뉴스레터들을 모아, 다양한 뉴스레터를 추천 하는 서비스를 제공 합니다'
+  'Prlc | Url을 이쁘게, 짧게, 커스텀 하세요. 수많은 뉴스레터들을 모아, 다양한 뉴스레터를 추천 하는 서비스를 제공 합니다'
 
 export const CATEGORY_ICONS = {
   개발: '💻',
