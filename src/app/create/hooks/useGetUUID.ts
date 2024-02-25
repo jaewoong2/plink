@@ -1,5 +1,6 @@
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import { UndefinedInitialDataOptions, useQuery } from '@tanstack/react-query'
+import axios from '@/app/api/api'
 
 type Data = { uuid: string }
 
@@ -9,8 +10,8 @@ const useGetUUID = (
   configuration?: Omit<UndefinedInitialDataOptions<Data, AxiosError<{ message: string }>>, 'queryKey' | 'queryFn'>
 ) => {
   return useQuery<Data, AxiosError<{ message: string }>>({
-    queryKey: ['/api/uuid'],
-    queryFn: () => fetcher('/api/uuid'),
+    queryKey: ['/link/uuid'],
+    queryFn: () => fetcher('/link/uuid'),
     retry: 2,
     ...configuration,
   })

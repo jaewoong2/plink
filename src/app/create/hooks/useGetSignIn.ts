@@ -1,6 +1,7 @@
+import axios from '@/app/api/api'
 import { Session } from '@supabase/supabase-js'
 import { UseQueryOptions, useQuery } from '@tanstack/react-query'
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 
 type Data = { data: { session: Session } }
 
@@ -11,8 +12,8 @@ const useGetSession = (
   configuration?: Omit<UseQueryOptions<Data, AxiosError<{ message: string; show: boolean }>>, 'queryKey'>
 ) => {
   return useQuery<Data, AxiosError<{ message: string; show: boolean }>>({
-    queryKey: ['/api/session'],
-    queryFn: () => fetcher(`/api/session?show=${show ?? false}`),
+    queryKey: ['/auth/validate'],
+    queryFn: () => fetcher(`/auth/validate?show=${show ?? false}`),
     ...configuration,
   })
 }

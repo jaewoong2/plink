@@ -13,7 +13,7 @@ type Props = {
 }
 
 const RightSection = ({ type }: Props) => {
-  const { description, image, link, title, isLoading, customURL, ogs_id, urls_id } = useCreateLinkState()
+  const { description, image, link, title, isLoading, customURL } = useCreateLinkState()
   const toast = useToast()
   const navigation = useRouter()
 
@@ -43,12 +43,10 @@ const RightSection = ({ type }: Props) => {
 
   const onClickSaveButton = () => {
     mutate({
-      ogs_id: ogs_id,
-      urls_id: urls_id,
       custom_url: customURL ?? '',
       origin_url: link,
       title,
-      image,
+      image: image,
       description,
     })
   }

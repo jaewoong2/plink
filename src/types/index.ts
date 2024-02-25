@@ -1,8 +1,20 @@
-import { Database } from './supabase'
+export type User = {
+  id: number
+  username: string
+  email: string
+  refresh_token: string
+  access_token: string
+}
 
-export type OGS = Database['public']['Tables']['ogs']['Row']
-export type URLS = Database['public']['Tables']['urls']['Row']
-export type URLS_INFOS = Database['public']['Views']['url_infos']['Row']
+export type Link = {
+  id: number
+  image: string
+  title: string
+  description: string
+  origin_url: string
+  custom_url: string
+  user: User
+}
 
 export type NextPageProps<
   Params extends Record<string, string> | null = null,
@@ -20,7 +32,7 @@ export type LinkState = {
   type: string
   url: string
   link: string
-} & Partial<URLS_INFOS>
+} & Partial<Link>
 
 export type CreateLinkState = LinkState & {
   customURL: string | null

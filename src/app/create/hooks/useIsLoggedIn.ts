@@ -1,5 +1,5 @@
 import { UseQueryOptions } from '@tanstack/react-query'
-import useGetSession from './useGetSession'
+import useGetSession from './useGetSignIn'
 import { AxiosError } from 'axios'
 import { Session } from '@supabase/supabase-js'
 import { useCallback, useMemo } from 'react'

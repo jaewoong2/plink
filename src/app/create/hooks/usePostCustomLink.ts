@@ -1,12 +1,13 @@
-import { OGS, URLS, URLS_INFOS } from '@/types'
+import axios from '@/app/api/api'
+import { Link } from '@/types'
 import { UseMutationOptions, useMutation } from '@tanstack/react-query'
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 
-type Variables = OGS & URLS & URLS_INFOS
+type Variables = Link
 type Response = { message: string }
 
-const postFetcher = (arg: Partial<Variables>) => axios.post<Response>('/api/og', arg).then((res) => res.data)
-const patchFetcher = (arg: Partial<Variables>) => axios.patch<Response>('/api/og', arg).then((res) => res.data)
+const postFetcher = (arg: Partial<Variables>) => axios.post<Response>('/link', arg).then((res) => res.data)
+const patchFetcher = (arg: Partial<Variables>) => axios.patch<Response>('/link', arg).then((res) => res.data)
 
 const fetchers = {
   CREATE: postFetcher,

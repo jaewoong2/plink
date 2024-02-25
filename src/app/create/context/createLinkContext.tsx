@@ -11,8 +11,6 @@ import useGetUrl from '../hooks/useGetUrl'
 import useIsLoggedIn from '../hooks/useIsLoggedIn'
 
 const initialState: CreateLinkState = {
-  urls_id: -1,
-  ogs_id: -1,
   description: '',
   image: '',
   site_name: '',
@@ -63,16 +61,21 @@ export const CreateLinkProvider = ({ link, customURL, type = 'CREATE', children 
     link: protocolLink,
     customURL: customURL ?? null,
   })
+
   const { data, isLoading, error, isSuccess } = useGetOgData(protocolLink, {
     enabled: isValidUrl(protocolLink) && !customURL,
   })
+
   const { data: uuidData } = useGetUUID({
     enabled: state.customURL === null,
   })
+
   const session = useIsLoggedIn()
   const navigation = useRouter()
   const toast = useToast()
-  const { data: urlData, isSuccess: urlDataIsSuccess } = useGetUrl(customURL ?? '', { enabled: customURL !== null })
+  const { data: urlData, isSuccess: urlDataIsSuccess } = useGetUrl(customURL ?? '', {
+    enabled: Boolean(customURL),
+  })
 
   const { mutate } = usePostCustomLink(type ?? 'CREATE', {
     onSuccess(data) {
@@ -101,8 +104,6 @@ export const CreateLinkProvider = ({ link, customURL, type = 'CREATE', children 
       title: state.title,
       image: state.image,
       description: state.description,
-      ogs_id: state.ogs_id,
-      urls_id: state.urls_id,
     })
   }
 
@@ -118,14 +119,14 @@ export const CreateLinkProvider = ({ link, customURL, type = 'CREATE', children 
 
     if (!(urlDataIsSuccess && session.isSuccess)) return
 
-    if (!urlData?.data.user_id) {
+    if (!urlData?.data.user.email) {
       navigation.push('/')
     }
 
-    if (urlData?.data.user_id !== session.data?.data.session.user.id) {
+    if (urlData?.data.user.email !== session.data?.data.session.user.id) {
       navigation.push('/')
     }
-  }, [urlDataIsSuccess, session, navigation, type, urlData?.data.user_id])
+  }, [urlDataIsSuccess, session, navigation, type, urlData?.data?.user?.email])
 
   useEffect(() => {
     if (urlData && urlData.data) {
@@ -134,13 +135,11 @@ export const CreateLinkProvider = ({ link, customURL, type = 'CREATE', children 
         payload: {
           description: urlData.data.description ?? '',
           image: urlData.data.image ?? '',
-          ogs_id: urlData.data.ogs_id,
           title: urlData.data.title ?? '',
           customURL: decodeURIComponent(urlData.data.custom_url ?? ''),
           link: urlData.data.origin_url ?? '',
           url: urlData.data.custom_url ?? '',
-          urls_id: urlData.data.urls_id,
-          user_id: urlData.data.user_id,
+          user: urlData.data.user,
         },
       })
       return
@@ -168,7 +167,7 @@ export const CreateLinkProvider = ({ link, customURL, type = 'CREATE', children 
   }, [data, error, isSuccess, toast])
 
   useEffect(() => {
-    if (error) {
+    if (error && error?.response?.status !== 404) {
       toast({
         title: error?.response?.data?.message,
         description: '올바른 링크를 작성해주세요',

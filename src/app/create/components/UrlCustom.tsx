@@ -55,7 +55,7 @@ const UrlCustom = () => {
         }}
       >
         <Input
-          placeholder={link || 'https://prl.co'}
+          placeholder={link || 'https://prlc.kr'}
           disabled={!isEdit}
           value={link ?? ''}
           onChange={(e) => {

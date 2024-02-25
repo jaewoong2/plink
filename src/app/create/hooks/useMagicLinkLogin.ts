@@ -1,9 +1,10 @@
+import axios from '@/app/api/api'
 import { UseMutationOptions, useMutation } from '@tanstack/react-query'
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 
-type Variables = { email: string }
+type Variables = { email: string; redirectTo: string }
 
-const patchFetcher = (arg: Partial<Variables>) => axios.post<Response>('/api/magiclink', arg).then((res) => res.data)
+const patchFetcher = (arg: Partial<Variables>) => axios.post<Response>('/auth/login-email', arg).then((res) => res.data)
 
 const useMagicLinkLogin = (
   configuration?: UseMutationOptions<Response, AxiosError<Response>, Partial<Variables>, unknown>

@@ -1,18 +1,21 @@
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import { UseQueryOptions, useQuery } from '@tanstack/react-query'
-import { URLS_INFOS } from '@/types'
+import { Link } from '@/types'
+import axios from '@/app/api/api'
 
-type Data = { data: URLS_INFOS }
+type Data = { data: Link }
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data)
 
 const useGetUrls = (
-  custom_url: URLS_INFOS['custom_url'],
+  custom_url: Link['custom_url'],
   configuration?: Omit<UseQueryOptions<Data, AxiosError<{ message: string }>>, 'queryKey' | 'queryFn'>
 ) => {
+  const URL = `/link/search?custom_url=${custom_url}`
+
   return useQuery<Data, AxiosError<{ message: string }>>({
-    queryKey: [`/api/url?custom_id=${custom_url}`],
-    queryFn: () => fetcher(`/api/url?custom_url=${custom_url}`),
+    queryKey: [URL],
+    queryFn: () => fetcher(URL),
     retry: 2,
     ...configuration,
   })

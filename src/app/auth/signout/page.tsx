@@ -18,7 +18,7 @@ const SignOut = ({ searchParams }: Props) => {
   const { mutate } = useSignout({
     onSuccess: () => {
       navigtaion.replace(searchParams?.redirectUrl ?? '/')
-      queryClient.removeQueries({ queryKey: ['/api/session'] })
+      queryClient.removeQueries({ queryKey: ['/auth/validate'] })
       toast({
         title: '로그아웃 성공 😎',
         position: 'top',
